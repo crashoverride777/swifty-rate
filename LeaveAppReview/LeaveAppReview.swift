@@ -101,6 +101,6 @@ extension RateGameAlert where Self: UIViewController {
         alertController.addAction(noThanksAction)
         
         /// Present alert
-        presentViewController(alertController, animated: true, completion: nil)
+        self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
     }
 }
