@@ -1,15 +1,18 @@
 # LeaveAppReview
-Show a rate app alert
 
-A simple helper class to show a rate game/app alert, that will show a rate app alert after a set amount of app launches.
+A simple helper class to show a rate game/app alert after a set amount of app launches.
 
-If you look for a more feature rich and advance helper check out Appirator or iRate
+If you are looking for a more feature rich and advanced helper check these 2 great helper.
+
+https://github.com/nicklockwood/iRate
+
+https://github.com/arashpayan/appirater
 
 # SetUp
 
 - Step 1:
 
-Copy the .swift file into your project
+Copy the LeaveAppReview.swift file into your project
 
 - Step 2:
 
@@ -18,20 +21,19 @@ To not annoy your users I would set this to at least 15-20.
 
 - Step 3:
 
-Still in the RateGame struct enter your app ID that you can get from iTunes Connect
+Still in the "RateGame" struct enter your app ID from iTunes Connect
 
 To get the ID login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
 
 - Step 4:
 
-I prefer to show the rateGameAlert at app launch. To do this go to your intial ViewController (GameViewController) and comform to the 
-protocol
+I prefer to show the rateGameAlert at app launch. To do this go to your intial ViewController (GameViewController) and comform to the protocol
 
 ```swift
 class ViewController: UIViewController, RateGameAlert {....
 ```
 
-Than create an NSTimer (this ensures your app fully launched before alert is shown)
+Than create an NSTimer (this ensures your app fully launched before the alert is shown)
 
 ```swift
 NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(rateGameAlert), userInfo: nil, repeats: false)
