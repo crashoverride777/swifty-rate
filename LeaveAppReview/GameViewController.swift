@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, RateGameAlert {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,12 @@ class GameViewController: UIViewController {
             
             skView.presentScene(scene)
         }
+        
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(rateGameAlert), userInfo: nil, repeats: false)
+    }
+    
+    func rateGameAlert() {
+        checkRateGameAlert()
     }
 
     override func shouldAutorotate() -> Bool {

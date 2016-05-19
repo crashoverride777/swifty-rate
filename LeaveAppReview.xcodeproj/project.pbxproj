@@ -16,6 +16,7 @@
 		B4EF04C01CEE445700CE65EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4EF04BE1CEE445700CE65EE /* LaunchScreen.storyboard */; };
 		B4EF04CB1CEE445700CE65EE /* LeaveAppReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF04CA1CEE445700CE65EE /* LeaveAppReviewTests.swift */; };
 		B4EF04D61CEE445700CE65EE /* LeaveAppReviewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF04D51CEE445700CE65EE /* LeaveAppReviewUITests.swift */; };
+		B4EF04E41CEE44AC00CE65EE /* LeaveAppReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF04E31CEE44AC00CE65EE /* LeaveAppReview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B4EF04D11CEE445700CE65EE /* LeaveAppReviewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeaveAppReviewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4EF04D51CEE445700CE65EE /* LeaveAppReviewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveAppReviewUITests.swift; sourceTree = "<group>"; };
 		B4EF04D71CEE445700CE65EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4EF04E31CEE44AC00CE65EE /* LeaveAppReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveAppReview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		B4EF04B01CEE445700CE65EE /* LeaveAppReview */ = {
 			isa = PBXGroup;
 			children = (
+				B4EF04E31CEE44AC00CE65EE /* LeaveAppReview.swift */,
 				B4EF04B11CEE445700CE65EE /* AppDelegate.swift */,
 				B4EF04B31CEE445700CE65EE /* GameScene.sks */,
 				B4EF04B51CEE445700CE65EE /* GameScene.swift */,
@@ -266,6 +269,7 @@
 				B4EF04B61CEE445700CE65EE /* GameScene.swift in Sources */,
 				B4EF04B81CEE445700CE65EE /* GameViewController.swift in Sources */,
 				B4EF04B21CEE445700CE65EE /* AppDelegate.swift in Sources */,
+				B4EF04E41CEE44AC00CE65EE /* LeaveAppReview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +498,7 @@
 				B4EF04DC1CEE445700CE65EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4EF04DD1CEE445700CE65EE /* Build configuration list for PBXNativeTarget "LeaveAppReviewTests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +507,7 @@
 				B4EF04DF1CEE445700CE65EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4EF04E01CEE445700CE65EE /* Build configuration list for PBXNativeTarget "LeaveAppReviewUITests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +516,7 @@
 				B4EF04E21CEE445700CE65EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
