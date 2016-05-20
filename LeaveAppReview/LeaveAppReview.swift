@@ -83,8 +83,9 @@ extension RateGameAlert where Self: UIViewController {
         /// Leave review
         let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .Default) { _ in
             RateGame.doNotShow = true
-            guard let url = NSURL(string: RateGame.url) else { return }
-            UIApplication.sharedApplication().openURL(url)
+            if let url = NSURL(string: RateGame.url) {
+                UIApplication.sharedApplication().openURL(url)
+            }
         }
         alertController.addAction(leaveReviewAction)
         
