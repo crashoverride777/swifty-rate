@@ -2,7 +2,7 @@
 
 A simple helper class to show a rate game/app alert after a set amount of app launches.
 
-If you are looking for a more feature rich and advanced helper check these 2 great helper.
+If you are looking for a more feature rich and more advanced helper have a look at these 2 great helpers.
 
 https://github.com/nicklockwood/iRate
 
@@ -13,9 +13,6 @@ https://github.com/arashpayan/appirater
 - Step 1:
 
 Copy the LeaveAppReview.swift file into your project
-
-By default the app launches until the alert are set to 25. To change this value go to the helper and adjust to your preferred value.
-To not annoy your users I would set this lower 20.
 
 - Step 2:
 
