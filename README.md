@@ -27,11 +27,18 @@ class ViewController: UIViewController, RateGameAlertController {....
 override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        checkRateGameAlert(forAppID: "Enter your app ID")
+        let appStoreURL = getAppStoreURL(forAppID: "Enter your app I")
+        
+        // This way it will use the default app launches setting of 25
+        checkRateGameAlert(forAppURL: appStoreURL)
+        
+        // This way it will use your own custom app launches setting
+        checkRateGameAlert(forAppURL: appStoreURL, appLaunchesUntilAlert: 5) 
+
     }
 ```
 
-To get your app ID login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
+To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
 
 Note: 
 If you want to show the alert at a later step simply add this code at the desired viewController
