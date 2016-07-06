@@ -21,87 +21,93 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.0
+//    v1.1
 
 import UIKit
-import Foundation
 
+/// Alert strings
 private struct AlertString {
+    static let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? ""
+    
     static let title = "Review App"
-    static let message = "If you enjoy playing ... would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
+    static let message = "If you enjoy playing \(appName) would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
     static let leaveReview = "Leave Review"
     static let remindMeLater = "Remind Me Later"
     static let noThanks = "No, Thanks"
 }
 
-private struct RateGame {
-    
-    /// URL
-    static let url = "itms-apps://itunes.apple.com/app/id" + "YourAppID"
-    
-    /// App launches till showing
-    static let appLaunchesTillShowing = 0 //30
-    
-    /// Current app launches
-    static let showKey = "RateGameCounterUntilAlertKey"
+/// Settings
+private struct Settings {
+    static let currentAppLaunchesKey = "CurrentAppLaunchesKey"
     static var currentAppLaunches: Int {
-        get { return NSUserDefaults.standardUserDefaults().integerForKey(showKey) }
-        set { NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: showKey) }
+        get { return NSUserDefaults.standardUserDefaults().integerForKey(currentAppLaunchesKey) }
+        set { NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: currentAppLaunchesKey) }
     }
-    
-    /// Hidding
-    static let hideKey = "RateGameHideAlertKey"
+
+    static let doNotShowKey = "DoNotShowKey"
     static var doNotShow: Bool {
-        get { return NSUserDefaults.standardUserDefaults().boolForKey(hideKey) }
-        set { NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: hideKey) }
+        get { return NSUserDefaults.standardUserDefaults().boolForKey(doNotShowKey) }
+        set { NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: doNotShowKey) }
     }
 }
 
-protocol RateGameAlert { }
-extension RateGameAlert where Self: UIViewController {
+/// Rate game alert protocol extension
+protocol RateGameAlertController { }
+extension RateGameAlertController where Self: UIViewController {
     
-    func checkRateGameAlert() {
+    func checkRateGameAlert(forAppURL appURL: String, appLaunchesUntilAlert: Int = 25) {
         
         /// If already reviewed or pressed no thanks button exit method
-        guard !RateGame.doNotShow else { return }
+        guard !Settings.doNotShow else { return }
         
         /// Increase launch counter
-        RateGame.currentAppLaunches += 1
+        Settings.currentAppLaunches += 1
         
         /// Check if timesTillShowingAlert counter is reached
-        guard RateGame.currentAppLaunches >= RateGame.appLaunchesTillShowing else { return }
+        guard Settings.currentAppLaunches >= appLaunchesUntilAlert else { return }
         
         /// Show alert
-        showAlert()
+        showAlert(forAppURL: appURL)
     }
     
-    private func showAlert() {
+    private func showAlert(forAppURL appURL: String) {
         
         /// Alert controller
         let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .Alert)
         
         /// Leave review
         let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .Default) { _ in
-            RateGame.doNotShow = true
-            if let url = NSURL(string: RateGame.url) {
-                UIApplication.sharedApplication().openURL(url)
-            }
+            Settings.doNotShow = true
+            guard let url = NSURL(string: appURL) else { return }
+            UIApplication.sharedApplication().openURL(url)
         }
         alertController.addAction(leaveReviewAction)
         
         /// Remind me later
         let remindMeLaterAction = UIAlertAction(title: AlertString.remindMeLater, style: .Default) { _ in
-            RateGame.currentAppLaunches = RateGame.currentAppLaunches / 2
+            Settings.currentAppLaunches = Settings.currentAppLaunches / 2
         }
         alertController.addAction(remindMeLaterAction)
         
         /// No thanks
-        let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .Cancel) { _ in
-            RateGame.doNotShow = true
+        let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .Destructive) { _ in
+            Settings.doNotShow = true
         }
         alertController.addAction(noThanksAction)
         
         /// Present alert
         view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+    }
+}
+
+/// Get app store url for appID
+extension RateGameAlertController {
+    func getAppStoreURL(forAppID appID: String) -> String {
+        #if os(iOS)
+            return "itms-apps://itunes.apple.com/app/id" + appID
+        #endif
+        #if os(tvOS)
+            return "com.apple.TVAppStore://itunes.apple.com/app/id" + appID
+        #endif
     }
 }

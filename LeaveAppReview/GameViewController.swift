@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController, RateGameAlert {
+class GameViewController: UIViewController, RateGameAlertController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +28,19 @@ class GameViewController: UIViewController, RateGameAlert {
             
             skView.presentScene(scene)
         }
-        
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(rateGameAlert), userInfo: nil, repeats: false)
     }
     
-    func rateGameAlert() {
-        checkRateGameAlert()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let appStoreURL = getAppStoreURL(forAppID: "Enter your app ID, iTunesConnect -> GeneralApp Information")
+        
+        //checkRateGameAlert(forAppID: appID) // This way default app launches is 25
+        
+        checkRateGameAlert(forAppURL: appStoreURL, appLaunchesUntilAlert: 0) // This way you set your custom app launches
+        
     }
-
+    
     override func shouldAutorotate() -> Bool {
         return true
     }
