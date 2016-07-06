@@ -14,37 +14,24 @@ https://github.com/arashpayan/appirater
 
 Copy the LeaveAppReview.swift file into your project
 
+By default the app launches until the alert are set to 25. To change this value go to the helper and adjust to your preferred value.
+To not annoy your users I would set this lower 20.
+
 - Step 2:
 
-In LeaveAppReview.swift go to the struct "RateGame" and set your desired app launches until showing the alert.
-To not annoy your users I would set this to at least 15-20.
-
-- Step 3:
-
-Still in the "RateGame" struct enter your app ID from iTunes Connect
-
-To get the ID login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
-
-- Step 4:
-
-I prefer to show the rateGameAlert at app launch. To do this go to your intial ViewController (GameViewController) and comform to the protocol
+I prefer to show the rateGameAlert at app launch. To do this go to your intial ViewController (GameViewController) and comform to the protocol and than check for the alert in viewDidAppear (viewDidLoad is too early to show an alert)
 
 ```swift
-class ViewController: UIViewController, RateGameAlert {....
+class ViewController: UIViewController, RateGameAlertController {....
+
+override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkRateGameAlert(forAppID: "Enter your app ID")
+    }
 ```
 
-Than create an NSTimer (this ensures your app fully launched before the alert is shown)
-
-```swift
-NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(rateGameAlert), userInfo: nil, repeats: false)
-```
-
-and the corresponding function calling the checkRateGameAlert method from the helper
-
-func rateGameAlert() {
-    checkRateGameAlert(forAppURL: "Enter your app store url")
-}
-
+To get your app ID login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
 
 Note: 
 If you want to show the alert at a later step simply add this code at the desired viewController
@@ -63,6 +50,6 @@ extension RateGameAlert where Self: SKScene {
 
 - v1.1
 
-Small tweaks and improvements
+Tweaks and improvements
 
 - v1.0
