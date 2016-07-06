@@ -63,6 +63,6 @@ extension RateGameAlert where Self: SKScene {
 
 - v1.1
 
-Small tweaks
+Small tweaks and improvements
 
 - v1.0
