@@ -42,7 +42,7 @@ NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(rate
 and the corresponding function calling the checkRateGameAlert method from the helper
 
 func rateGameAlert() {
-    checkRateGameAlert()
+    checkRateGameAlert(forAppURL: "Enter your app store url")
 }
 
 
@@ -60,5 +60,9 @@ extension RateGameAlert where Self: SKScene {
 ```
 
 # Release Notes
+
+- v1.1
+
+Small tweaks
 
 - v1.0
