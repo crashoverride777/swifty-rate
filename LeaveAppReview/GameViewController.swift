@@ -33,11 +33,9 @@ class GameViewController: UIViewController, RateGameAlertController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        let appStoreURL = getAppStoreURL(forAppID: "Enter your app ID, iTunesConnect -> GeneralApp Information")
+        //checkRateGameAlert(forAppID: "Enter your app ID, iTunesConnect -> GeneralApp Information") // This way default app launches is 25
         
-        //checkRateGameAlert(forAppID: appID) // This way default app launches is 25
-        
-        checkRateGameAlert(forAppURL: appStoreURL, appLaunchesUntilAlert: 0) // This way you set your custom app launches
+        checkRateGameAlert(forAppID: "Enter your app ID, iTunesConnect -> GeneralApp Information", appLaunchesUntilAlert: 0) // This way you set your custom app launches
         
     }
     

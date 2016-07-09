@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.1
+//    v1.1.1
 
 import UIKit
 
@@ -37,61 +37,59 @@ private struct AlertString {
 }
 
 /// Settings
-private struct Settings {
-    static let currentAppLaunchesKey = "CurrentAppLaunchesKey"
-    static var currentAppLaunches: Int {
-        get { return NSUserDefaults.standardUserDefaults().integerForKey(currentAppLaunchesKey) }
-        set { NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: currentAppLaunchesKey) }
-    }
+private let currentAppLaunchesKey = "CurrentAppLaunchesKey"
+private var currentAppLaunches: Int {
+    get { return NSUserDefaults.standardUserDefaults().integerForKey(currentAppLaunchesKey) }
+    set { NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: currentAppLaunchesKey) }
+}
 
-    static let doNotShowKey = "DoNotShowKey"
-    static var doNotShow: Bool {
-        get { return NSUserDefaults.standardUserDefaults().boolForKey(doNotShowKey) }
-        set { NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: doNotShowKey) }
-    }
+private let doNotShowKey = "DoNotShowKey"
+private var doNotShow: Bool {
+    get { return NSUserDefaults.standardUserDefaults().boolForKey(doNotShowKey) }
+    set { NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: doNotShowKey) }
 }
 
 /// Rate game alert protocol extension
 protocol RateGameAlertController { }
 extension RateGameAlertController where Self: UIViewController {
     
-    func checkRateGameAlert(forAppURL appURL: String, appLaunchesUntilAlert: Int = 25) {
+    func checkRateGameAlert(forAppID appID: String, appLaunchesUntilAlert: Int = 25) {
         
         /// If already reviewed or pressed no thanks button exit method
-        guard !Settings.doNotShow else { return }
+        guard !doNotShow else { return }
         
         /// Increase launch counter
-        Settings.currentAppLaunches += 1
+        currentAppLaunches += 1
         
         /// Check if timesTillShowingAlert counter is reached
-        guard Settings.currentAppLaunches >= appLaunchesUntilAlert else { return }
+        guard currentAppLaunches >= appLaunchesUntilAlert else { return }
         
         /// Show alert
-        showAlert(forAppURL: appURL)
+        showAlert(forAppID: appID)
     }
     
-    private func showAlert(forAppURL appURL: String) {
+    private func showAlert(forAppID appID: String) {
         
         /// Alert controller
         let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .Alert)
         
         /// Leave review
-        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .Default) { _ in
-            Settings.doNotShow = true
-            guard let url = NSURL(string: appURL) else { return }
+        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .Default) { [unowned self] _ in
+            doNotShow = true
+            guard let url = NSURL(string: self.getAppStoreURL(forAppID: appID)) else { return }
             UIApplication.sharedApplication().openURL(url)
         }
         alertController.addAction(leaveReviewAction)
         
         /// Remind me later
         let remindMeLaterAction = UIAlertAction(title: AlertString.remindMeLater, style: .Default) { _ in
-            Settings.currentAppLaunches = Settings.currentAppLaunches / 2
+            currentAppLaunches = currentAppLaunches / 2
         }
         alertController.addAction(remindMeLaterAction)
         
         /// No thanks
         let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .Destructive) { _ in
-            Settings.doNotShow = true
+            doNotShow = true
         }
         alertController.addAction(noThanksAction)
         
@@ -101,7 +99,8 @@ extension RateGameAlertController where Self: UIViewController {
 }
 
 /// Get app store url for appID
-extension RateGameAlertController {
+private extension RateGameAlertController {
+    
     func getAppStoreURL(forAppID appID: String) -> String {
         #if os(iOS)
             return "itms-apps://itunes.apple.com/app/id" + appID
