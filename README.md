@@ -23,14 +23,12 @@ class ViewController: UIViewController, RateGameAlertController {....
 
 override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let appStoreURL = getAppStoreURL(forAppID: "Enter your app I")
-        
+
         // This way it will use the default app launches setting of 25
-        checkRateGameAlert(forAppURL: appStoreURL)
+        checkRateGameAlert(forAppID: "Enter your app ID")
         
         // This way it will use your own custom app launches setting
-        checkRateGameAlert(forAppURL: appStoreURL, appLaunchesUntilAlert: 5) 
+        checkRateGameAlert(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5) 
 
     }
 ```
@@ -51,6 +49,10 @@ extension RateGameAlert where Self: SKScene {
 ```
 
 # Release Notes
+
+- v1.1.1
+
+Small tweaks
 
 - v1.1
 
