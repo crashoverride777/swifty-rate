@@ -83,11 +83,8 @@ extension RateGameAlert where Self: UIViewController {
     
     func checkRateGameAlert(forAppID appID: String, appLaunchesUntilAlert: Int = 20) {
         
-        /// Check if connected to internet
-        guard Internet.isConnected else { return }
-        
-        /// If already reviewed or pressed no thanks button exit method
-        guard !doNotShow else { return }
+        /// Check if already reviewed/cancelled and internet connection
+        guard !doNotShow && Internet.isConnected else { return }
         
         /// Increase launch counter
         currentAppLaunches += 1
