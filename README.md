@@ -1,4 +1,4 @@
-# LeaveAppReview
+# Swift Leave App Review Helper
 
 A simple helper class to show a rate game/app alert after a set amount of app launches.
 
