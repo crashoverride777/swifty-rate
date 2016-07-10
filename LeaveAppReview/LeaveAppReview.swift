@@ -24,6 +24,7 @@
 //    v1.1.1
 
 import UIKit
+import SystemConfiguration
 
 /// Alert strings
 private struct AlertString {
@@ -49,11 +50,38 @@ private var doNotShow: Bool {
     set { NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: doNotShowKey) }
 }
 
+/// Check internet connection
+public var isConnectedToInternet: Bool {
+    var zeroAddress = sockaddr_in()
+    zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+    zeroAddress.sin_family = sa_family_t(AF_INET)
+    
+    guard let defaultRouteReachability = withUnsafePointer(&zeroAddress, {
+        SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+    }) else {
+        return false
+    }
+    
+    var flags = SCNetworkReachabilityFlags()
+    
+    guard SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) else {
+        return false
+    }
+    
+    let isReachable = flags.contains(.Reachable)
+    let needsConnection = flags.contains(.ConnectionRequired)
+    
+    return (isReachable && !needsConnection)
+}
+
 /// Rate game alert protocol extension
 protocol RateGameAlert { }
 extension RateGameAlert where Self: UIViewController {
     
     func checkRateGameAlert(forAppID appID: String, appLaunchesUntilAlert: Int = 25) {
+        
+        /// Check if connected to internet
+        guard isConnectedToInternet else { return }
         
         /// If already reviewed or pressed no thanks button exit method
         guard !doNotShow else { return }
