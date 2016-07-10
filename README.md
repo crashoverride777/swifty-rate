@@ -19,7 +19,7 @@ Copy the LeaveAppReview.swift file into your project
 I prefer to show the rateGameAlert at app launch. To do this go to your intial ViewController (GameViewController) and comform to the protocol and than check for the alert in viewDidAppear (viewDidLoad is too early to show an alert)
 
 ```swift
-class ViewController: UIViewController, RateGameAlertController {....
+class ViewController: UIViewController, RateGameAlert {....
 
 override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
