@@ -33,7 +33,7 @@ class GameViewController: UIViewController, RateGameAlert {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        //checkRateGameAlert(forAppID: "1051292772")
+        //checkRateGameAlert(forAppID: "1051292772") // This way uses default app launches (20)
         
         checkRateGameAlert(forAppID: "1051292772", appLaunchesUntilAlert: 0) // This way you set your custom app launches
         
