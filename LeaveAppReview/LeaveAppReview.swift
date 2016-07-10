@@ -50,8 +50,8 @@ private var doNotShow: Bool {
 }
 
 /// Rate game alert protocol extension
-protocol RateGameAlertController { }
-extension RateGameAlertController where Self: UIViewController {
+protocol RateGameAlert { }
+extension RateGameAlert where Self: UIViewController {
     
     func checkRateGameAlert(forAppID appID: String, appLaunchesUntilAlert: Int = 25) {
         
@@ -63,12 +63,6 @@ extension RateGameAlertController where Self: UIViewController {
         
         /// Check if timesTillShowingAlert counter is reached
         guard currentAppLaunches >= appLaunchesUntilAlert else { return }
-        
-        /// Show alert
-        showAlert(forAppID: appID)
-    }
-    
-    private func showAlert(forAppID appID: String) {
         
         /// Alert controller
         let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .Alert)
@@ -99,7 +93,7 @@ extension RateGameAlertController where Self: UIViewController {
 }
 
 /// Get app store url for appID
-private extension RateGameAlertController {
+private extension RateGameAlert {
     
     func getAppStoreURL(forAppID appID: String) -> String {
         #if os(iOS)

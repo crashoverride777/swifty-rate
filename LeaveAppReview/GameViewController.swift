@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController, RateGameAlertController {
+class GameViewController: UIViewController, RateGameAlert {
 
     override func viewDidLoad() {
         super.viewDidLoad()
