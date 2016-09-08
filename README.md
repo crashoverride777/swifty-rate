@@ -50,6 +50,10 @@ extension RateGameAlert where Self: SKScene {
 
 # Release Notes
 
+- v1.2
+
+Updated to Swift 3
+
 - v1.1.1
 
 Small tweaks
