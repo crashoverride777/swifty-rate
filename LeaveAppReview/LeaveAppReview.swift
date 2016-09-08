@@ -21,14 +21,14 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.1.1
+//    v1.2
 
 import UIKit
 import SystemConfiguration
 
 /// Alert strings
 private struct AlertString {
-    static let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? ""
+    static let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
     
     static let title = "Review App"
     static let message = "If you enjoy playing \(appName) would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
@@ -40,41 +40,14 @@ private struct AlertString {
 /// Settings
 private let currentAppLaunchesKey = "CurrentAppLaunchesKey"
 private var currentAppLaunches: Int {
-    get { return NSUserDefaults.standardUserDefaults().integerForKey(currentAppLaunchesKey) }
-    set { NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: currentAppLaunchesKey) }
+    get { return UserDefaults.standard.integer(forKey: currentAppLaunchesKey) }
+    set { UserDefaults.standard.set(newValue, forKey: currentAppLaunchesKey) }
 }
 
 private let doNotShowKey = "DoNotShowKey"
 private var doNotShow: Bool {
-    get { return NSUserDefaults.standardUserDefaults().boolForKey(doNotShowKey) }
-    set { NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: doNotShowKey) }
-}
-
-/// Check internet connection
-public struct Internet {
-    
-    public static var isConnected: Bool {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
-        
-        guard let defaultRouteReachability = withUnsafePointer(&zeroAddress, {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
-        }) else {
-            return false
-        }
-        
-        var flags = SCNetworkReachabilityFlags()
-        
-        guard SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) else {
-            return false
-        }
-        
-        let isReachable = flags.contains(.Reachable)
-        let needsConnection = flags.contains(.ConnectionRequired)
-        
-        return (isReachable && !needsConnection)
-    }
+    get { return UserDefaults.standard.bool(forKey: doNotShowKey) }
+    set { UserDefaults.standard.set(newValue, forKey: doNotShowKey) }
 }
 
 /// Rate game alert protocol extension
@@ -84,7 +57,7 @@ extension RateGameAlert where Self: UIViewController {
     func checkRateGameAlert(forAppID appID: String, appLaunchesUntilAlert: Int = 20) {
         
         /// Check if already reviewed/cancelled and internet connection
-        guard !doNotShow && Internet.isConnected else { return }
+        guard !doNotShow else { return }
         
         /// Increase launch counter
         currentAppLaunches += 1
@@ -93,30 +66,30 @@ extension RateGameAlert where Self: UIViewController {
         guard currentAppLaunches >= appLaunchesUntilAlert else { return }
         
         /// Alert controller
-        let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .alert)
         
         /// Leave review
-        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .Default) { [unowned self] _ in
+        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .default) { [unowned self] _ in
             doNotShow = true
-            guard let url = NSURL(string: self.getAppStoreURL(forAppID: appID)) else { return }
-            UIApplication.sharedApplication().openURL(url)
+            guard let url = URL(string: self.getAppStoreURL(forAppID: appID)) else { return }
+            UIApplication.shared.openURL(url)
         }
         alertController.addAction(leaveReviewAction)
         
         /// Remind me later
-        let remindMeLaterAction = UIAlertAction(title: AlertString.remindMeLater, style: .Default) { _ in
+        let remindMeLaterAction = UIAlertAction(title: AlertString.remindMeLater, style: .default) { _ in
             currentAppLaunches = currentAppLaunches / 2
         }
         alertController.addAction(remindMeLaterAction)
         
         /// No thanks
-        let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .Destructive) { _ in
+        let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .destructive) { _ in
             doNotShow = true
         }
         alertController.addAction(noThanksAction)
         
         /// Present alert
-        view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 }
 
