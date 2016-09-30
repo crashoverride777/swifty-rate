@@ -1,8 +1,8 @@
 # Swift Leave App Review Helper (iOS and tvOS)
 
-A simple helper class to show a rate game/app alert after a set amount of app launches (iOS and tvOS)
+A simple protocol extension to show a rate game/app UIAlertController after a set amount of app launches.
 
-If you are looking for a more feature rich and more advanced helper have a look at these 2 great helpers.
+If you are looking for a more feature rich and advanced helper have a look at these.
 
 https://github.com/nicklockwood/iRate
 
