@@ -2,7 +2,7 @@
 
 A simple protocol extension to show a rate game/app UIAlertController after a set amount of app launches.
 
-If you are looking for a more feature rich and advanced helper have a look at these.
+If you are looking for a more feature rich and advanced helper have a look at these 2 popular projects.
 
 https://github.com/nicklockwood/iRate
 
