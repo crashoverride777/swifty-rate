@@ -25,30 +25,21 @@ override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
         // This way it will use the default app launches setting of 25
-        checkRateGameAlert(forAppID: "Enter your app ID")
+        RateGameAlert.check(forAppID: "Enter your app ID", view: view)
         
         // This way it will use your own custom app launches setting
-        checkRateGameAlert(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5) 
+        RateGameAlert.check(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, view: view) 
 
     }
 ```
 
 To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
 
-Note: 
-If you want to show the alert at a later step simply add this code at the desired viewController
-
-If you would like to show this alert in a SKScene than go to the helper and change the protocol extension from
-```swift
-extension RateGameAlert where Self: UIViewController {
-```
-
-to 
-```swift
-extension RateGameAlert where Self: SKScene {
-```
-
 # Release Notes
+
+- v1.2.1
+
+Changed helper into a enum with static method to make API clearer.
 
 - v1.2
 
