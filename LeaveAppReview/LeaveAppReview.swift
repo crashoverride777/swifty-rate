@@ -38,7 +38,7 @@ private func getAppStoreURL(forAppID appID: String) -> String {
 }
 
 /// Alert strings
-private struct AlertString {
+private enum AlertString {
     static let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
     
     static let title = "Review App"
