@@ -21,10 +21,21 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.2
+//    v1.2.1
 
 import UIKit
+import SpriteKit
 import SystemConfiguration
+
+/// Get app store URL
+private func getAppStoreURL(forAppID appID: String) -> String {
+    #if os(iOS)
+        return "itms-apps://itunes.apple.com/app/id" + appID
+    #endif
+    #if os(tvOS)
+        return "com.apple.TVAppStore://itunes.apple.com/app/id" + appID
+    #endif
+}
 
 /// Alert strings
 private struct AlertString {
@@ -37,24 +48,33 @@ private struct AlertString {
     static let noThanks = "No, Thanks"
 }
 
-/// Settings
-private let currentAppLaunchesKey = "CurrentAppLaunchesKey"
-private var currentAppLaunches: Int {
-    get { return UserDefaults.standard.integer(forKey: currentAppLaunchesKey) }
-    set { UserDefaults.standard.set(newValue, forKey: currentAppLaunchesKey) }
-}
-
-private let doNotShowKey = "DoNotShowKey"
-private var doNotShow: Bool {
-    get { return UserDefaults.standard.bool(forKey: doNotShowKey) }
-    set { UserDefaults.standard.set(newValue, forKey: doNotShowKey) }
-}
-
 /// Rate game alert protocol extension
-protocol RateGameAlert { }
-extension RateGameAlert where Self: UIViewController {
+public enum RateGameAlert {
     
-    func checkRateGameAlert(forAppID appID: String, appLaunchesUntilAlert: Int = 20) {
+    // MARK: - Properties
+    
+    /// Current app launches
+    private static let currentAppLaunchesKey = "CurrentAppLaunchesKey"
+    private static var currentAppLaunches: Int {
+        get { return UserDefaults.standard.integer(forKey: currentAppLaunchesKey) }
+        set { UserDefaults.standard.set(newValue, forKey: currentAppLaunchesKey) }
+    }
+    
+    /// Do not show
+    private static let doNotShowKey = "DoNotShowKey"
+    private static var doNotShow: Bool {
+        get { return UserDefaults.standard.bool(forKey: doNotShowKey) }
+        set { UserDefaults.standard.set(newValue, forKey: doNotShowKey) }
+    }
+    
+    // MARK: - Methods
+    
+    /// Check rate game alert
+    ///
+    /// - parameter forAppID: The app ID for the app to rate.
+    /// - parameter appLaunchesUntilAlert: The app launches required until the alert is shown. Defaults to 20.
+    /// - parameter view: The view that presents the alert.
+    static func check(forAppID appID: String, appLaunchesUntilAlert: Int = 20, view: UIView?) {
         
         /// Check if already reviewed/cancelled and internet connection
         guard !doNotShow else { return }
@@ -69,9 +89,9 @@ extension RateGameAlert where Self: UIViewController {
         let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .alert)
         
         /// Leave review
-        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .default) { [unowned self] _ in
+        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .default) { _ in
             doNotShow = true
-            guard let url = URL(string: self.getAppStoreURL(forAppID: appID)) else { return }
+            guard let url = URL(string: getAppStoreURL(forAppID: appID)) else { return }
             UIApplication.shared.openURL(url)
         }
         alertController.addAction(leaveReviewAction)
@@ -90,18 +110,5 @@ extension RateGameAlert where Self: UIViewController {
         
         /// Present alert
         view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-    }
-}
-
-/// Get app store url for appID
-private extension RateGameAlert {
-    
-    func getAppStoreURL(forAppID appID: String) -> String {
-        #if os(iOS)
-            return "itms-apps://itunes.apple.com/app/id" + appID
-        #endif
-        #if os(tvOS)
-            return "com.apple.TVAppStore://itunes.apple.com/app/id" + appID
-        #endif
     }
 }

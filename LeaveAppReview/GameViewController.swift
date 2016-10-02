@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController, RateGameAlert {
+class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,9 @@ class GameViewController: UIViewController, RateGameAlert {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //checkRateGameAlert(forAppID: "1051292772") // This way uses default app launches (20)
+        //RateGameAlert.check(forAppID: "1051292772", view: view) // This way uses default app launches (20)
         
-        checkRateGameAlert(forAppID: "1051292772", appLaunchesUntilAlert: 0) // This way you set your custom app launches
+        RateGameAlert.check(forAppID: "1051292772", appLaunchesUntilAlert: 0, view: view) // This way you set your own custom app launches
         
     }
     
