@@ -1,5 +1,7 @@
 # Swift Leave App Review Helper (iOS and tvOS)
 
+Note: I will lock down this project withing the next 1-2 updates. This means there will be no more source breaking changes which I am sure is frustrating some. All future changes will be handled via deprecated warnings. I am also looking to create a cocoa pod for this project very soon.
+
 A simple protocol extension to show a rate game/app UIAlertController after a set amount of app launches.
 
 If you are looking for a more feature rich and advanced helper have a look at these 2 popular projects.
