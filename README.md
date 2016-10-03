@@ -1,4 +1,4 @@
-# Swift Leave App Review Helper (iOS and tvOS)
+# SwiftyRateAppAlert
 
 Note: I will lock down this project withing the next 1-2 updates. This means there will be no more source breaking changes which I am sure is frustrating some. All future changes will be handled via deprecated warnings. I am also looking to create a cocoa pod for this project very soon.
 
@@ -14,7 +14,7 @@ https://github.com/arashpayan/appirater
 
 - Step 1:
 
-Copy the LeaveAppReview.swift file into your project
+Copy the SwiftyRateAppAlert.swift file into your project
 
 - Step 2:
 
@@ -27,10 +27,10 @@ override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
         // This way it will use the default app launches setting of 25
-        RateGameAlert.check(forAppID: "Enter your app ID", view: view)
+        SwiftyRateAppAlert.check(forAppID: "Enter your app ID", view: view)
         
         // This way it will use your own custom app launches setting
-        RateGameAlert.check(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, view: view) 
+        SwiftyRateAppAlert.check(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, view: view) 
 
     }
 ```
@@ -39,20 +39,4 @@ To get your app ID, login to iTunes connect and go to MyApps-AppInformation and 
 
 # Release Notes
 
-- v1.2.1
-
-Changed helper into a enum with static method to make API clearer.
-
-- v1.2
-
-Updated to Swift 3
-
-- v1.1.1
-
-Small tweaks
-
-- v1.1
-
-Tweaks and improvements
-
-- v1.0
+- v2.0
