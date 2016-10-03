@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>LeaveAppReview.xcscheme</key>
+		<key>SwiftyRateAppAlert.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,17 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B4EF04AD1CEE445700CE65EE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B4EF04C51CEE445700CE65EE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B4EF04D01CEE445700CE65EE</key>
+		<key>B4533F8E1DA2CD6500440CC0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

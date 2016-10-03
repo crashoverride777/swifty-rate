@@ -21,11 +21,9 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.2.1
+//    v2.0
 
 import UIKit
-import SpriteKit
-import SystemConfiguration
 
 /// Get app store URL
 private func getAppStoreURL(forAppID appID: String) -> String {
@@ -48,8 +46,12 @@ private enum AlertString {
     static let noThanks = "No, Thanks"
 }
 
-/// Rate game alert protocol extension
-public enum RateGameAlert {
+/**
+ SwiftyRateGameAlert
+ 
+ A enum to show a rate game alert after a set amount of app launches.
+ */
+public enum SwiftyRateGameAlert {
     
     // MARK: - Properties
     
@@ -74,7 +76,7 @@ public enum RateGameAlert {
     /// - parameter forAppID: The app ID for the app to rate.
     /// - parameter appLaunchesUntilAlert: The app launches required until the alert is shown. Defaults to 20.
     /// - parameter view: The view that presents the alert.
-    static func check(forAppID appID: String, appLaunchesUntilAlert: Int = 20, view: UIView?) {
+    public static func check(forAppID appID: String, appLaunchesUntilAlert: Int = 20, view: UIView?) {
         
         /// Check if already reviewed/cancelled and internet connection
         guard !doNotShow else { return }
