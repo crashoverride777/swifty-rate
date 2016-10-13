@@ -8,6 +8,10 @@ https://github.com/nicklockwood/iRate
 
 https://github.com/arashpayan/appirater
 
+Cocoa Pods
+
+I know that the current way with copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. Stay tuned.
+
 # SetUp
 
 - Step 1:
