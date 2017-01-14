@@ -1,8 +1,8 @@
 # SwiftyRateAppAlert
 
-A enum to show a rate game/app UIAlertController after a set amount of app launches.
+A simple helper to show a rate game/app UIAlertController after a set amount of app launches.
 
-If you are looking for a more feature rich and advanced helper have a look at these 2 popular projects.
+If you are looking for a more feature rich and advanced helper have a look at these 2 popular repositories.
 
 https://github.com/nicklockwood/iRate
 
