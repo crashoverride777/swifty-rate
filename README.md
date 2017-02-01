@@ -8,6 +8,10 @@ https://github.com/nicklockwood/iRate
 
 https://github.com/arashpayan/appirater
 
+# SKStoreReviewController
+
+It seems Apple will introduce their own rating sytem (view controller) with iOS 10.3. I will update this helper accordingly when the update is released.
+
 # Cocoa Pods
 
 I know that the current way with copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. Stay tuned.
