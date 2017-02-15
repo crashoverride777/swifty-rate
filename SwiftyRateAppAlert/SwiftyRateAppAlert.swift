@@ -3,6 +3,8 @@
 
 //    The MIT License (MIT)
 //
+//    Copyright (c) 2016-2017 Dominik Ringler
+//
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
 //    in the Software without restriction, including without limitation the rights
@@ -24,6 +26,7 @@
 //    v2.0
 
 import UIKit
+import StoreKit
 
 /// Get app store URL
 private func getAppStoreURL(forAppID appID: String) -> String {
@@ -46,27 +49,32 @@ private enum AlertString {
     static let noThanks = "No, Thanks"
 }
 
+/// Keys
+private enum Key: String {
+    case currentAppLaunches = "RateGameAlertCurrentAppLaunchesKey"
+    case isRemoved = "RateGameAlertDoNotShowKey"
+}
+
+
 /**
  SwiftyRateGameAlert
  
- A enum to show a rate game alert after a set amount of app launches.
+ A helper for showing a SKStoreReviewController or rate game UIAlertController.
  */
 public enum SwiftyRateGameAlert {
     
     // MARK: - Properties
     
     /// Current app launches
-    private static let currentAppLaunchesKey = "CurrentAppLaunchesKey"
     private static var currentAppLaunches: Int {
-        get { return UserDefaults.standard.integer(forKey: currentAppLaunchesKey) }
-        set { UserDefaults.standard.set(newValue, forKey: currentAppLaunchesKey) }
+        get { return UserDefaults.standard.integer(forKey: Key.currentAppLaunches.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.currentAppLaunches.rawValue) }
     }
     
-    /// Do not show
-    private static let doNotShowKey = "DoNotShowKey"
-    private static var doNotShow: Bool {
-        get { return UserDefaults.standard.bool(forKey: doNotShowKey) }
-        set { UserDefaults.standard.set(newValue, forKey: doNotShowKey) }
+    /// Dho not show
+    private static var isRemoved: Bool {
+        get { return UserDefaults.standard.bool(forKey: Key.isRemoved.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.isRemoved.rawValue) }
     }
     
     // MARK: - Methods
@@ -76,10 +84,20 @@ public enum SwiftyRateGameAlert {
     /// - parameter forAppID: The app ID for the app to rate.
     /// - parameter appLaunchesUntilAlert: The app launches required until the alert is shown. Defaults to 20.
     /// - parameter view: The view that presents the alert.
-    public static func check(forAppID appID: String, appLaunchesUntilAlert: Int = 20, view: UIView?) {
+    public static func request(forAppID appID: String, appLaunchesUntilAlert: Int = 20, view: UIView?) {
+        
+        // SKStoreReviewController if supported
+        /*
+         #if os(iOS)
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.request()
+                return
+            }
+         #endif
+         */
         
         /// Check if already reviewed/cancelled and internet connection
-        guard !doNotShow else { return }
+        guard !isRemoved else { return }
         
         /// Increase launch counter
         currentAppLaunches += 1
@@ -92,9 +110,13 @@ public enum SwiftyRateGameAlert {
         
         /// Leave review
         let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .default) { _ in
-            doNotShow = true
+            isRemoved = true
             guard let url = URL(string: getAppStoreURL(forAppID: appID)) else { return }
-            UIApplication.shared.openURL(url)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:])
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
         alertController.addAction(leaveReviewAction)
         
@@ -106,11 +128,11 @@ public enum SwiftyRateGameAlert {
         
         /// No thanks
         let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .destructive) { _ in
-            doNotShow = true
+            isRemoved = true
         }
         alertController.addAction(noThanksAction)
         
         /// Present alert
-        view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        view?.window?.rootViewController?.present(alertController, animated: true)
     }
 }
