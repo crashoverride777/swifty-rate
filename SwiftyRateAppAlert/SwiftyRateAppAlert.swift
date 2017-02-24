@@ -136,9 +136,6 @@ private extension SwiftyRateAppAlert {
     /// Check if time to show alert
     static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
         
-        // Check if test mode
-        guard appLaunchesUntilFirstAlert > 0 else { return true }
-        
         // Get date
         let date = Date()
         let formatter = DateFormatter()
@@ -153,11 +150,12 @@ private extension SwiftyRateAppAlert {
         if savedMonth == 0 {
             savedMonth = month
         }
+        
         if savedYear == 0 {
             savedYear = year
         }
         
-        // Reset everyhting if new year started
+        // If year has changed reset everthing
         if year > savedYear {
             savedYear = year
             alertsShownThisYear = 0
@@ -174,12 +172,13 @@ private extension SwiftyRateAppAlert {
             alertsShownThisYear += 1
             savedMonth = month
             return true
-        } else if currentAppLaunches > appLaunchesUntilFirstAlert, month >= savedMonth + 4 {
+        } else if currentAppLaunches > appLaunchesUntilFirstAlert, month >= (savedMonth + 4) {
             alertsShownThisYear += 1
             savedMonth = month
             return true
         }
         
+        // Not alert needed to show
         return false
     }
 }
