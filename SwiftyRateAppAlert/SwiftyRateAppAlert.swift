@@ -101,17 +101,6 @@ public enum SwiftyRateAppAlert {
     /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
     public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
-        
-        // SKStoreReviewController if supported
-        /*
-         #if os(iOS)
-         if #available(iOS 10.3, *) {
-         MFStoreReviewController.request()
-         return
-         }
-         #endif
-         */
-        
         guard let viewController = viewController, !isRemoved, isTimeToShowAlert(appLaunches: appLaunchesUntilFirstAlert) else { return }
         
         // Alert controller
