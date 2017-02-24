@@ -161,17 +161,16 @@ private extension SwiftyRateAppAlert {
             savedYear = year
         }
         
-        // Check that max (3) alerts shown per year is not reached
-        if alertsShownThisYear >= 3 {
-            if year > savedYear {
-                savedYear = year
-                alertsShownThisYear = 0
-                currentAppLaunches = 0
-            } else {
-                return false
-            }
+        // Reset everyhting if new year started
+        if year > savedYear {
+            savedYear = year
+            alertsShownThisYear = 0
+            currentAppLaunches = 0
         }
         
+        // Check that max (3) alerts shown per year is not reached
+        guard alertsShownThisYear < 3 else { return false }
+    
         // Check 1st alert
         currentAppLaunches += 1
         if currentAppLaunches == appLaunchesUntilFirstAlert || appLaunchesUntilFirstAlert < 0 {
@@ -190,21 +189,17 @@ private extension SwiftyRateAppAlert {
     
     /// Check if it needs to show subsequent alert
     static func doesNeedToShowSubsequentAlert(month: Int, year: Int) -> Bool {
-        // If year is the same as saved year check if 4 months have passed
-        // If year is not the same no need for 4 month check as 12 months have passed since last save.
-        if year == savedYear {
-            switch savedMonth {
-            case 09:
-                guard month >= 01 else { return false }
-            case 10:
-                guard month >= 02 else { return false }
-            case 11:
-                guard month >= 03 else { return false }
-            case 12:
-                guard month >= 04 else { return false }
-            default:
-                guard month >= savedMonth + 4 else { return false }
-            }
+        switch savedMonth {
+        case 09:
+            guard month >= 01 else { return false }
+        case 10:
+            guard month >= 02 else { return false }
+        case 11:
+            guard month >= 03 else { return false }
+        case 12:
+            guard month >= 04 else { return false }
+        default:
+            guard month >= savedMonth + 4 else { return false }
         }
         
         savedMonth = month
