@@ -1,16 +1,12 @@
 # SwiftyRate
 
-A simple helper to show a rate game/app UIAlertController
+A simple helper to show a SKStoreReviewController or custom rate game/app UIAlertController.
 
 This helper is designed to behave similary to the upcoming SKStoreReviewController from Apple which I will include once iOS 10.3 is released.
 
-This helper will use the SKStoreReviewController (iOS 10.3) if its supported otherwise it will show a custom alert with similar rules and bejaviour.
+This helper will use the SKStoreReviewController (iOS 10.3) if its supported otherwise it will show a custom alert with similar rules and behaviours. Apple restricts the use of SKStoreReviewController to 3 times per year, the actual logic behind the scheduling is unknown. If the user has rated the app the alert will never show again until the app is uninstalled.
 
-What does that mean exactly? Apple restricts the use of SKStoreReviewController to 3 times per year or until 1 rate app button has been pressed. The actual logic behind the scheduling is unknown. 
-
-If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of app launches. It will than show another alert after 4 months until the max limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
-
-If the user has rated the app the alert will never show again until the app is uninstalled.
+If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of app launches. It will than show further alerts in 4 month intervals until the limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
 
 # Cocoa Pods
 
@@ -28,7 +24,7 @@ Copy the SwiftyRate.swift file into your project
 
 Request review e.g at app launch. 
 
-As Apple describes in the documentation for the upcoming SKStoreReviewController 
+As Apple describes in the documentation for SKStoreReviewController 
 
 "Although you should call this method when it makes sense in the user experience flow of your app, the actual display of a rating/review request view is governed by App Store policy. Because this method may or may not present an alert, it's not appropriate to call it in response to a button tap or other user action."
 
@@ -36,19 +32,20 @@ As Apple describes in the documentation for the upcoming SKStoreReviewController
 ```swift
 class ViewController: UIViewController {
 
-// Use view did appear as viewDidLoad is to early to show a UIAlertController
+NOTE: Use view did appear as viewDidLoad is to early to show a UIAlertController
 
 override func viewDidAppear(animated: Bool) { 
         super.viewDidAppear(animated)
        
-        // This way it will use the default app launches setting of 20
+        // This way it will use the default app launches setting of 18.
         SwiftyRate.request(forAppID: "Enter your app ID", from: self)
         
-        // This way it will use your own custom app launches setting
-        SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, from: self) 
+        // This way it will use your own custom app launches setting e.g 15.
+        // I would not go lower than 10-15 app launches.  
+        SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilAlert: 15, from: self) 
     }
     
-To test the alert you can set appLaunchesUntilAlert to something negative e.g -1
+To test the alert you can set appLaunchesUntilAlert to 0.
 ```
 
 To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
