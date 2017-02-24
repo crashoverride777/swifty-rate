@@ -45,7 +45,7 @@ override func viewDidAppear(animated: Bool) {
         SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilFirstAlert: 15, from: self) 
     }
     
-// To test the alert you can set appLaunchesUntilAlert to 0.
+// To test the alert you can set appLaunchesUntilFirstAlert to 0.
 ```
 
 To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
