@@ -1,4 +1,4 @@
-# SwiftyRateAppAlert
+# SwiftyAppRate
 
 A simple helper to show a rate game/app UIAlertController
 
@@ -54,5 +54,7 @@ To get your app ID, login to iTunes connect and go to MyApps-AppInformation and 
 # Release Notes
 
 - v3.0
+
+Renamed to SwiftyAppRate
 
 Redesigned to behave more like the upcoming SKStoreReviewController
