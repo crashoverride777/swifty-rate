@@ -1,12 +1,13 @@
 # SwiftyRateAppAlert
 
-A simple helper to show a rate game/app UIAlertController after a set amount of app launches.
+A simple helper to show a rate game/app UIAlertController
 
-If you are looking for a more feature rich and advanced helper have a look at these 2 popular repositories.
+This helper is desinged to behave like the upcoming SKStoreReviewController (I will include this once released). 
 
-https://github.com/nicklockwood/iRate
+What does that mean exactly?
 
-https://github.com/arashpayan/appirater
+You will request the 1st review alert after a set amount of app launches e.g 20. Than the helper will show another rate app alert after 4 months and another one after 4 months. In total there will be a max of 3 alerts shown. If the year has passed everything will reset and start again.
+
 
 # SKStoreReviewController
 
@@ -33,13 +34,14 @@ class ViewController: UIViewController {
 
 override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // To test the alert you can set appLaunchesUntilAlert to something negative e.g -1
 
-        // This way it will use the default app launches setting of 25
-        SwiftyRateAppAlert.check(forAppID: "Enter your app ID", view: view)
+        // This way it will use the default app launches setting of 20
+        SwiftyRateAppAlert.request(forAppID: "Enter your app ID", from: self)
         
         // This way it will use your own custom app launches setting
-        SwiftyRateAppAlert.check(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, view: view) 
-
+        SwiftyRateAppAlert.request(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, from: self) 
     }
 ```
 
@@ -47,8 +49,6 @@ To get your app ID, login to iTunes connect and go to MyApps-AppInformation and 
 
 # Release Notes
 
-- v2.0
+- v3.0
 
-Project has been renamed to SwiftyRateAppAlert.
-
-No more source breaking changes after this update. All future changes will be handled with deprecated messages unless the whole API changes.
+Redesigned to behave more like the upcoming SKStoreReviewController
