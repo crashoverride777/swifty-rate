@@ -2,17 +2,13 @@
 
 A simple helper to show a rate game/app UIAlertController
 
-This helper is designed to behave similary to the upcoming SKStoreReviewController from Apple. I will include this once iOS 10.3 is released.
+This helper is designed to behave similary to the upcoming SKStoreReviewController from Apple which I will include once iOS 10.3 is released.
 
-What does that mean exactly?
+What does that mean exactly? Apple restricts the use of SKStoreReviewController to 3 times per year or until 1 rate app button has been pressed. The actual logic behind this is unknow. 
 
-You will request the 1st review alert after a set amount of app launches e.g 20. Than the helper will show 2 more alerts at an interval of 4 months so in total there will be a max of 3 alerts shown per year. If the year has passed everything will reset and start again.
+With SwiftyRateApp you will request the 1st review alert after a set amount of app launches. Than the helper will show 2 more alerts at an interval of 4 months so in total there will be a max of 3 alerts shown per year. If the year has passed everything will reset and start again.
 
-If the user has rated the app the alert will never show again until the app uninstalled.
-
-# SKStoreReviewController
-
-It seems Apple will introduce their own rating sytem (view controller) with iOS 10.3. I will update this helper accordingly when the update is released.
+If the user has rated the app the alert will never show again until the app is uninstalled.
 
 # Cocoa Pods
 
@@ -28,7 +24,7 @@ Copy the SwiftyRateAppAlert.swift file into your project
 
 - Step 2:
 
-Request review such as at app launch.
+Request review e.g at app launch. 
 
 As Apple describes in the documentation for the upcoming SKStoreReviewController 
 
@@ -38,7 +34,9 @@ As Apple describes in the documentation for the upcoming SKStoreReviewController
 ```swift
 class ViewController: UIViewController {
 
-override func viewDidAppear(animated: Bool) {
+// Use view did appear as viewDidLoad is to early to show a UIAlertController
+
+override func viewDidAppear(animated: Bool) { 
         super.viewDidAppear(animated)
         
         // To test the alert you can set appLaunchesUntilAlert to something negative e.g -1
