@@ -4,9 +4,9 @@ A simple helper to show a rate game/app UIAlertController
 
 This helper is designed to behave similary to the upcoming SKStoreReviewController from Apple which I will include once iOS 10.3 is released.
 
-What does that mean exactly? Apple restricts the use of SKStoreReviewController to 3 times per year or until 1 rate app button has been pressed. The actual logic behind this is unknow. 
+What does that mean exactly? Apple restricts the use of SKStoreReviewController to 3 times per year or until 1 rate app button has been pressed. The actual logic behind the scheduling is unknown. 
 
-With SwiftyRateApp you will request the 1st review alert after a set amount of app launches. Than the helper will show 2 more alerts at an interval of 4 months so in total there will be a max of 3 alerts shown per year. If the year has passed everything will reset and start again.
+With SwiftyRateApp you will request the 1st review alert after a set amount of app launches. Than the helper will show 2 more alerts at an interval of 4 months. In total there can be a max of 3 alerts shown per year. If the year has passed everything will reset and start again.
 
 If the user has rated the app the alert will never show again until the app is uninstalled.
 
