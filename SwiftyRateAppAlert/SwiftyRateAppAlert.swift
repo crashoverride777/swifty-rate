@@ -103,7 +103,6 @@ public enum SwiftyRateAppAlert {
     public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
         guard let viewController = viewController, !isRemoved, isTimeToShowAlert(appLaunches: appLaunchesUntilFirstAlert) else { return }
         
-        // Alert controller
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
         let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
@@ -133,7 +132,7 @@ private extension SwiftyRateAppAlert {
     /// Check if time to show alert
     static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
         
-        // If negative app launches its test mode, show show alert
+        // If negative app launches its test mode
         if appLaunchesUntilFirstAlert < 0 {
             return true
         }
