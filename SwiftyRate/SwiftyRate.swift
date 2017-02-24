@@ -101,7 +101,7 @@ public enum SwiftyRate {
     /// - parameter forAppID: The app ID string for the app to rate.
     /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Set to 0 or negative number to test alert. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
-    public static func requestReview(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
+    public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
         
         /*
         // SKStoreReviewController
