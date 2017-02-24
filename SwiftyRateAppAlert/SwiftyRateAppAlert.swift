@@ -132,10 +132,8 @@ private extension SwiftyRateAppAlert {
     /// Check if time to show alert
     static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
         
-        // If negative app launches its test mode
-        if appLaunchesUntilFirstAlert < 0 {
-            return true
-        }
+        // Check if test mode
+        guard appLaunchesUntilFirstAlert > 0 else { return true }
         
         // Get date
         let date = Date()
