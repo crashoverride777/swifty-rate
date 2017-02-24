@@ -42,7 +42,7 @@ override func viewDidAppear(animated: Bool) {
         
         // This way it will use your own custom app launches setting e.g 15.
         // I would not go lower than 10-15 app launches.  
-        SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilAlert: 15, from: self) 
+        SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilFirstAlert: 15, from: self) 
     }
     
 // To test the alert you can set appLaunchesUntilAlert to 0.
