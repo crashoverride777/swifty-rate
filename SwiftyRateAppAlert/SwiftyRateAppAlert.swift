@@ -168,9 +168,11 @@ private extension SwiftyRateAppAlert {
         
         if currentAppLaunches == appLaunchesUntilFirstAlert {
             alertsShownThisYear += 1
+            savedMonth = month
             return true
         } else if currentAppLaunches > appLaunchesUntilFirstAlert, doesNeedToShowSubsequentAlert(month: month, year: year) {
             alertsShownThisYear += 1
+            savedMonth = month
             return true
         }
         
@@ -192,7 +194,6 @@ private extension SwiftyRateAppAlert {
             guard month >= savedMonth + 4 else { return false }
         }
         
-        savedMonth = month
         return true
     }
 }
