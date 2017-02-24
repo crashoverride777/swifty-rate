@@ -174,30 +174,12 @@ private extension SwiftyRateAppAlert {
             alertsShownThisYear += 1
             savedMonth = month
             return true
-        } else if currentAppLaunches > appLaunchesUntilFirstAlert, doesNeedToShowSubsequentAlert(month: month, year: year) {
+        } else if currentAppLaunches > appLaunchesUntilFirstAlert, month >= savedMonth + 4 {
             alertsShownThisYear += 1
             savedMonth = month
             return true
         }
         
         return false
-    }
-    
-    /// Check if it needs to show subsequent alert
-    static func doesNeedToShowSubsequentAlert(month: Int, year: Int) -> Bool {
-        switch savedMonth {
-        case 09:
-            guard month >= 01 else { return false }
-        case 10:
-            guard month >= 02 else { return false }
-        case 11:
-            guard month >= 03 else { return false }
-        case 12:
-            guard month >= 04 else { return false }
-        default:
-            guard month >= savedMonth + 4 else { return false }
-        }
-        
-        return true
     }
 }
