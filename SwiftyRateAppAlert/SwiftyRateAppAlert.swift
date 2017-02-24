@@ -169,7 +169,7 @@ private extension SwiftyRateAppAlert {
         }
         
         // Check that max (3) alerts shown per year is not reached
-        guard alertsShownThisYear <= 3 else { return false }
+        guard alertsShownThisYear < 3 else { return false }
         
         // Show alert if needed
         currentAppLaunches += 1
