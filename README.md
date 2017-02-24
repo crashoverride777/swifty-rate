@@ -40,15 +40,15 @@ class ViewController: UIViewController {
 
 override func viewDidAppear(animated: Bool) { 
         super.viewDidAppear(animated)
-        
-        // To test the alert you can set appLaunchesUntilAlert to something negative e.g -1
-
+       
         // This way it will use the default app launches setting of 20
-        SwiftyRate.requestReview(forAppID: "Enter your app ID", from: self)
+        SwiftyRate.request(forAppID: "Enter your app ID", from: self)
         
         // This way it will use your own custom app launches setting
-        SwiftyRate.requestReview(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, from: self) 
+        SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilAlert: 5, from: self) 
     }
+    
+To test the alert you can set appLaunchesUntilAlert to something negative e.g -1
 ```
 
 To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
