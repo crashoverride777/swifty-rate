@@ -101,8 +101,12 @@ public enum SwiftyRateAppAlert {
     /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
     public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
-        guard let viewController = viewController, !isRemoved, isTimeToShowAlert(appLaunches: appLaunchesUntilFirstAlert) else { return }
+        guard let viewController = viewController else { return }
         
+        if appLaunchesUntilFirstAlert > 0 {
+            guard !isRemoved, isTimeToShowAlert(appLaunches: appLaunchesUntilFirstAlert) else { return }
+        }
+       
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
         let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
