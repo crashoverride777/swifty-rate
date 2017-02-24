@@ -170,15 +170,15 @@ private extension SwiftyRateAppAlert {
         
         // Check that max (3) alerts shown per year is not reached
         guard alertsShownThisYear <= 3 else { return false }
-    
-        // Check 1st alert
+        
+        // Show alert if needed
         currentAppLaunches += 1
+        
         if currentAppLaunches == appLaunchesUntilFirstAlert || appLaunchesUntilFirstAlert < 0 {
             alertsShownThisYear += 1
             return true
         }
         
-        // Check subsequent 2 alerts
         if currentAppLaunches > appLaunchesUntilFirstAlert, doesNeedToShowSubsequentAlert(month: month, year: year) {
             alertsShownThisYear += 1
             return true
