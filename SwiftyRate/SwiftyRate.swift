@@ -48,11 +48,11 @@ private enum LocalizedText { // TODO
 
 /// Keys
 private enum Key: String {
-    case isRemoved           = "SwiftyRateAppAlertIsRemovedKey"
-    case currentAppLaunches  = "SwiftyRateAppAlertCurrentAppLaunchesKey"
-    case alertsShownThisYear = "SwiftyRateAppAlertShownThisYearKey"
-    case savedMonth          = "SwiftyRateAppAlertLastSavedMonthKey"
-    case savedYear           = "SwiftyRateAppAlertLastSavedYearKey"
+    case isRemoved           = "SwiftyRateIsRemovedKey"
+    case currentAppLaunches  = "SwiftyRateAppLaunchesKey"
+    case alertsShownThisYear = "SwiftyRateShownThisYearKey"
+    case savedMonth          = "SwiftyRateSavedMonthKey"
+    case savedYear           = "SwiftyRateSavedYearKey"
 }
 
 /**
