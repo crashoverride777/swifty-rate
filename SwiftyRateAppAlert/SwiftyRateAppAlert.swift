@@ -23,13 +23,10 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v2.0
-
 import UIKit
-import StoreKit
 
 /// Get app store URL
-private func getAppStoreURL(forAppID appID: String) -> String {
+private func getStoreURL(forAppID appID: String) -> String {
     #if os(iOS)
         return "itms-apps://itunes.apple.com/app/id" + appID
     #endif
@@ -39,100 +36,178 @@ private func getAppStoreURL(forAppID appID: String) -> String {
 }
 
 /// Alert strings
-private enum AlertString {
-    static let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
+private enum LocalizedText { // TODO
+    static let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app"
     
-    static let title = "Review App"
-    static let message = "If you enjoy playing \(appName) would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
-    static let leaveReview = "Leave Review"
-    static let remindMeLater = "Remind Me Later"
-    static let noThanks = "No, Thanks"
+    static let title = "Enjoying \(appName)?"
+    static let message = "Would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
+    static let rate = "Rate"
+    static let cancel = "Cancel"
 }
 
 /// Keys
 private enum Key: String {
-    case currentAppLaunches = "RateGameAlertCurrentAppLaunchesKey"
-    case isRemoved = "RateGameAlertDoNotShowKey"
+    case isRemoved           = "SwiftyRateAppAlertIsRemovedKey"
+    case currentAppLaunches  = "SwiftyRateAppAlertCurrentAppLaunchesKey"
+    case alertsShownThisYear = "SwiftyRateAppAlertShownThisYearKey"
+    case savedMonth          = "SwiftyRateAppAlertLastSavedMonthKey"
+    case savedYear           = "SwiftyRateAppAlertLastSavedYearKey"
 }
 
-
 /**
- SwiftyRateGameAlert
+ SwiftyRateAppAlert
  
  A helper for showing a SKStoreReviewController or rate game UIAlertController.
  */
-public enum SwiftyRateGameAlert {
+public enum SwiftyRateAppAlert {
     
     // MARK: - Properties
     
-    /// Current app launches
-    private static var currentAppLaunches: Int {
-        get { return UserDefaults.standard.integer(forKey: Key.currentAppLaunches.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.currentAppLaunches.rawValue) }
-    }
-    
-    /// Dho not show
-    private static var isRemoved: Bool {
+    /// Is removed
+    fileprivate static var isRemoved: Bool {
         get { return UserDefaults.standard.bool(forKey: Key.isRemoved.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: Key.isRemoved.rawValue) }
     }
     
+    /// Current app launches
+    fileprivate static var currentAppLaunches: Int {
+        get { return UserDefaults.standard.integer(forKey: Key.currentAppLaunches.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.currentAppLaunches.rawValue) }
+    }
+    
+    /// Alerts shown this year
+    fileprivate static var alertsShownThisYear: Int {
+        get { return UserDefaults.standard.integer(forKey: Key.alertsShownThisYear.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.alertsShownThisYear.rawValue) }
+    }
+    
+    /// Saved month
+    fileprivate static var savedMonth: Int {
+        get { return UserDefaults.standard.integer(forKey: Key.savedMonth.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.savedMonth.rawValue) }
+    }
+    
+    /// Saved year
+    fileprivate static var savedYear: Int {
+        get { return UserDefaults.standard.integer(forKey: Key.savedYear.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.savedYear.rawValue) }
+    }
+    
     // MARK: - Methods
     
-    /// Check rate game alert
+    /// Request rate app alert
     ///
-    /// - parameter forAppID: The app ID for the app to rate.
-    /// - parameter appLaunchesUntilAlert: The app launches required until the alert is shown. Defaults to 20.
-    /// - parameter view: The view that presents the alert.
-    public static func request(forAppID appID: String, appLaunchesUntilAlert: Int = 20, view: UIView?) {
+    /// - parameter forAppID: The app ID string for the app to rate.
+    /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Defaults to 18.
+    /// - parameter viewController: The view controller that will present the alert.
+    public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
         
         // SKStoreReviewController if supported
         /*
          #if os(iOS)
-            if #available(iOS 10.3, *) {
-                SKStoreReviewController.request()
-                return
-            }
+         if #available(iOS 10.3, *) {
+         MFStoreReviewController.request()
+         return
+         }
          #endif
          */
         
-        /// Check if already reviewed/cancelled and internet connection
-        guard !isRemoved else { return }
+        guard let viewController = viewController, !isRemoved, isTimeToShowAlert(appLaunches: appLaunchesUntilFirstAlert) else { return }
         
-        /// Increase launch counter
-        currentAppLaunches += 1
+        // Alert controller
+        let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
-        /// Check if timesTillShowingAlert counter is reached
-        guard currentAppLaunches >= appLaunchesUntilAlert else { return }
-        
-        /// Alert controller
-        let alertController = UIAlertController(title: AlertString.title, message: AlertString.message, preferredStyle: .alert)
-        
-        /// Leave review
-        let leaveReviewAction = UIAlertAction(title: AlertString.leaveReview, style: .default) { _ in
+        let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
             isRemoved = true
-            guard let url = URL(string: getAppStoreURL(forAppID: appID)) else { return }
+            guard let url = URL(string: getStoreURL(forAppID: appID)) else { return }
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
             } else {
                 UIApplication.shared.openURL(url)
             }
         }
-        alertController.addAction(leaveReviewAction)
+        alertController.addAction(rateAction)
         
-        /// Remind me later
-        let remindMeLaterAction = UIAlertAction(title: AlertString.remindMeLater, style: .default) { _ in
-            currentAppLaunches = currentAppLaunches / 2
+        let cancelAction = UIAlertAction(title: LocalizedText.cancel, style: .default)
+        alertController.addAction(cancelAction)
+        
+        DispatchQueue.main.async {
+            viewController.present(alertController, animated: true)
         }
-        alertController.addAction(remindMeLaterAction)
+    }
+}
+
+// MARK: - Internal
+
+private extension SwiftyRateAppAlert {
+    
+    /// Check if time to show alert
+    static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
+        // Get date
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US") // Set local to US so it always returns an english formatted number
+        formatter.dateFormat = "MM.yyyy"
+        let dateResult = formatter.string(from: date)
         
-        /// No thanks
-        let noThanksAction = UIAlertAction(title: AlertString.noThanks, style: .destructive) { _ in
-            isRemoved = true
+        guard let monthString = dateResult.components(separatedBy: ".").first, let month = Int(monthString) else { return false }
+        guard let yearString = dateResult.components(separatedBy: ".").last, let year = Int(yearString) else { return false }
+        
+        // Update saved month/year if never set before
+        if savedMonth == 0 {
+            savedMonth = month
         }
-        alertController.addAction(noThanksAction)
+        if savedYear == 0 {
+            savedYear = year
+        }
         
-        /// Present alert
-        view?.window?.rootViewController?.present(alertController, animated: true)
+        // Check that max (3) alerts shown per year is not reached
+        if alertsShownThisYear >= 3 {
+            if year > savedYear {
+                savedYear = year
+                alertsShownThisYear = 0
+                currentAppLaunches = 0
+            } else {
+                return false
+            }
+        }
+        
+        // Check 1st alert
+        currentAppLaunches += 1
+        if currentAppLaunches == appLaunchesUntilFirstAlert || appLaunchesUntilFirstAlert < 0 {
+            alertsShownThisYear += 1
+            return true
+        }
+        
+        // Check subsequent 2 alerts
+        if currentAppLaunches > appLaunchesUntilFirstAlert, doesNeedToShowSubsequentAlert(month: month, year: year) {
+            alertsShownThisYear += 1
+            return true
+        }
+        
+        return false
+    }
+    
+    /// Check if it needs to show subsequent alert
+    static func doesNeedToShowSubsequentAlert(month: Int, year: Int) -> Bool {
+        // If year is the same as saved year check if 4 months have passed
+        // If year is not the same no need for 4 month check as 12 months have passed since last save.
+        if year == savedYear {
+            switch savedMonth {
+            case 09:
+                guard month >= 01 else { return false }
+            case 10:
+                guard month >= 02 else { return false }
+            case 11:
+                guard month >= 03 else { return false }
+            case 12:
+                guard month >= 04 else { return false }
+            default:
+                guard month >= savedMonth + 4 else { return false }
+            }
+        }
+        
+        savedMonth = month
+        return true
     }
 }
