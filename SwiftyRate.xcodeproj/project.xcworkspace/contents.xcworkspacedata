@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SwiftyRateAppAlert.xcodeproj">
+      location = "self:/Users/Dominik/Documents/GitHub/SwiftyRateAppAlert/SwiftyRate.xcodeproj">
    </FileRef>
 </Workspace>

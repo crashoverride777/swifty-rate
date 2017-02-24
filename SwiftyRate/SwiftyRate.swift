@@ -24,6 +24,7 @@
 //    SOFTWARE.
 
 import UIKit
+//import StoreKit
 
 /// Get app store URL
 private func getStoreURL(forAppID appID: String) -> String {
@@ -59,7 +60,7 @@ private enum Key: String {
  
  A helper for showing a SKStoreReviewController or rate game UIAlertController.
  */
-public enum SwiftyRateAppAlert {
+public enum SwiftyRate {
     
     // MARK: - Properties
     
@@ -95,12 +96,24 @@ public enum SwiftyRateAppAlert {
     
     // MARK: - Methods
     
-    /// Request rate app alert
+    /// Request review controller
     ///
     /// - parameter forAppID: The app ID string for the app to rate.
-    /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Defaults to 18.
+    /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Set to 0 or negative number to test alert. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
-    public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
+    public static func requestReview(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
+        
+        /*
+        // SKStoreReviewController
+        #if os(iOS)
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.request()
+                return
+            }
+        #endif
+        */
+        
+        // Custom alert
         guard let viewController = viewController else { return }
         
         if appLaunchesUntilFirstAlert > 0 {
@@ -131,9 +144,9 @@ public enum SwiftyRateAppAlert {
 
 // MARK: - Internal
 
-private extension SwiftyRateAppAlert {
+private extension SwiftyRate {
     
-    /// Check if time to show alert
+    /// Check if alerts needs to be showed
     static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
         
         // Get date
@@ -178,7 +191,7 @@ private extension SwiftyRateAppAlert {
             return true
         }
         
-        // Not alert needed to show
+        // No alert is needed to show
         return false
     }
 }

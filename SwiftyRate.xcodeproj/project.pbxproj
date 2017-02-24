@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B4533F941DA2CD6500440CC0 /* SwiftyRateAppAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = B4533F921DA2CD6500440CC0 /* SwiftyRateAppAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B4533F9B1DA2CD7200440CC0 /* SwiftyRateAppAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4533F9A1DA2CD7200440CC0 /* SwiftyRateAppAlert.swift */; };
+		B4533F941DA2CD6500440CC0 /* SwiftyRate.h in Headers */ = {isa = PBXBuildFile; fileRef = B4533F921DA2CD6500440CC0 /* SwiftyRate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B4533F9B1DA2CD7200440CC0 /* SwiftyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B4533F8F1DA2CD6500440CC0 /* SwiftyRateAppAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRateAppAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4533F921DA2CD6500440CC0 /* SwiftyRateAppAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyRateAppAlert.h; sourceTree = "<group>"; };
+		B4533F8F1DA2CD6500440CC0 /* SwiftyRate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4533F921DA2CD6500440CC0 /* SwiftyRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyRate.h; sourceTree = "<group>"; };
 		B4533F931DA2CD6500440CC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B4533F9A1DA2CD7200440CC0 /* SwiftyRateAppAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRateAppAlert.swift; sourceTree = "<group>"; };
+		B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +32,7 @@
 		B4533F851DA2CD6500440CC0 = {
 			isa = PBXGroup;
 			children = (
-				B4533F911DA2CD6500440CC0 /* SwiftyRateAppAlert */,
+				B4533F911DA2CD6500440CC0 /* SwiftyRate */,
 				B4533F901DA2CD6500440CC0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,19 +40,19 @@
 		B4533F901DA2CD6500440CC0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B4533F8F1DA2CD6500440CC0 /* SwiftyRateAppAlert.framework */,
+				B4533F8F1DA2CD6500440CC0 /* SwiftyRate.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B4533F911DA2CD6500440CC0 /* SwiftyRateAppAlert */ = {
+		B4533F911DA2CD6500440CC0 /* SwiftyRate */ = {
 			isa = PBXGroup;
 			children = (
-				B4533F9A1DA2CD7200440CC0 /* SwiftyRateAppAlert.swift */,
-				B4533F921DA2CD6500440CC0 /* SwiftyRateAppAlert.h */,
+				B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */,
+				B4533F921DA2CD6500440CC0 /* SwiftyRate.h */,
 				B4533F931DA2CD6500440CC0 /* Info.plist */,
 			);
-			path = SwiftyRateAppAlert;
+			path = SwiftyRate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -62,16 +62,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4533F941DA2CD6500440CC0 /* SwiftyRateAppAlert.h in Headers */,
+				B4533F941DA2CD6500440CC0 /* SwiftyRate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B4533F8E1DA2CD6500440CC0 /* SwiftyRateAppAlert */ = {
+		B4533F8E1DA2CD6500440CC0 /* SwiftyRate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B4533F971DA2CD6500440CC0 /* Build configuration list for PBXNativeTarget "SwiftyRateAppAlert" */;
+			buildConfigurationList = B4533F971DA2CD6500440CC0 /* Build configuration list for PBXNativeTarget "SwiftyRate" */;
 			buildPhases = (
 				B4533F8A1DA2CD6500440CC0 /* Sources */,
 				B4533F8B1DA2CD6500440CC0 /* Frameworks */,
@@ -82,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = SwiftyRateAppAlert;
+			name = SwiftyRate;
 			productName = SwiftyRateAppAlert;
-			productReference = B4533F8F1DA2CD6500440CC0 /* SwiftyRateAppAlert.framework */;
+			productReference = B4533F8F1DA2CD6500440CC0 /* SwiftyRate.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -103,7 +103,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B4533F891DA2CD6500440CC0 /* Build configuration list for PBXProject "SwiftyRateAppAlert" */;
+			buildConfigurationList = B4533F891DA2CD6500440CC0 /* Build configuration list for PBXProject "SwiftyRate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B4533F8E1DA2CD6500440CC0 /* SwiftyRateAppAlert */,
+				B4533F8E1DA2CD6500440CC0 /* SwiftyRate */,
 			);
 		};
 /* End PBXProject section */
@@ -135,7 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4533F9B1DA2CD7200440CC0 /* SwiftyRateAppAlert.swift in Sources */,
+				B4533F9B1DA2CD7200440CC0 /* SwiftyRate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,11 +252,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SwiftyRateAppAlert/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyRate/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyRateAppAlert;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyRate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -273,11 +273,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SwiftyRateAppAlert/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyRate/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyRateAppAlert;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyRate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -287,7 +287,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B4533F891DA2CD6500440CC0 /* Build configuration list for PBXProject "SwiftyRateAppAlert" */ = {
+		B4533F891DA2CD6500440CC0 /* Build configuration list for PBXProject "SwiftyRate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4533F951DA2CD6500440CC0 /* Debug */,
@@ -296,7 +296,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B4533F971DA2CD6500440CC0 /* Build configuration list for PBXNativeTarget "SwiftyRateAppAlert" */ = {
+		B4533F971DA2CD6500440CC0 /* Build configuration list for PBXNativeTarget "SwiftyRate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4533F981DA2CD6500440CC0 /* Debug */,

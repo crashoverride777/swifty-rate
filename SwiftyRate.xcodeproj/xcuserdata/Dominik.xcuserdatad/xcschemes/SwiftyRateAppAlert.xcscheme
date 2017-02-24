@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B4533F8E1DA2CD6500440CC0"
-               BuildableName = "SwiftyRateAppAlert.framework"
-               BlueprintName = "SwiftyRateAppAlert"
-               ReferencedContainer = "container:SwiftyRateAppAlert.xcodeproj">
+               BuildableName = "SwiftyRate.framework"
+               BlueprintName = "SwiftyRate"
+               ReferencedContainer = "container:SwiftyRate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4533F8E1DA2CD6500440CC0"
-            BuildableName = "SwiftyRateAppAlert.framework"
-            BlueprintName = "SwiftyRateAppAlert"
-            ReferencedContainer = "container:SwiftyRateAppAlert.xcodeproj">
+            BuildableName = "SwiftyRate.framework"
+            BlueprintName = "SwiftyRate"
+            ReferencedContainer = "container:SwiftyRate.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4533F8E1DA2CD6500440CC0"
-            BuildableName = "SwiftyRateAppAlert.framework"
-            BlueprintName = "SwiftyRateAppAlert"
-            ReferencedContainer = "container:SwiftyRateAppAlert.xcodeproj">
+            BuildableName = "SwiftyRate.framework"
+            BlueprintName = "SwiftyRate"
+            ReferencedContainer = "container:SwiftyRate.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
