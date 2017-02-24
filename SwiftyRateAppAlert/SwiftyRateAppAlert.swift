@@ -143,6 +143,12 @@ private extension SwiftyRateAppAlert {
     
     /// Check if time to show alert
     static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
+        
+        // If negative app launches its test mode, show show alert
+        if appLaunchesUntilFirstAlert < 0 {
+            return true
+        }
+        
         // Get date
         let date = Date()
         let formatter = DateFormatter()
@@ -174,12 +180,10 @@ private extension SwiftyRateAppAlert {
         // Show alert if needed
         currentAppLaunches += 1
         
-        if currentAppLaunches == appLaunchesUntilFirstAlert || appLaunchesUntilFirstAlert < 0 {
+        if currentAppLaunches == appLaunchesUntilFirstAlert {
             alertsShownThisYear += 1
             return true
-        }
-        
-        if currentAppLaunches > appLaunchesUntilFirstAlert, doesNeedToShowSubsequentAlert(month: month, year: year) {
+        } else if currentAppLaunches > appLaunchesUntilFirstAlert, doesNeedToShowSubsequentAlert(month: month, year: year) {
             alertsShownThisYear += 1
             return true
         }
