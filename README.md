@@ -32,7 +32,7 @@ As Apple describes in the documentation for SKStoreReviewController
 ```swift
 class ViewController: UIViewController {
 
-NOTE: Use view did appear as viewDidLoad is to early to show a UIAlertController
+// NOTE: Use view did appear as viewDidLoad is to early to show a UIAlertController
 
 override func viewDidAppear(animated: Bool) { 
         super.viewDidAppear(animated)
@@ -45,7 +45,7 @@ override func viewDidAppear(animated: Bool) {
         SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilAlert: 15, from: self) 
     }
     
-To test the alert you can set appLaunchesUntilAlert to 0.
+// To test the alert you can set appLaunchesUntilAlert to 0.
 ```
 
 To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
