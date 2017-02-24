@@ -1,6 +1,3 @@
-
-//  Created by Dominik on 22/08/2015.
-
 //    The MIT License (MIT)
 //
 //    Copyright (c) 2016-2017 Dominik Ringler
