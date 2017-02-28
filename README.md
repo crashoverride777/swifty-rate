@@ -52,6 +52,10 @@ To get your app ID, login to iTunes connect and go to MyApps-AppInformation and 
 
 # Release Notes
 
+- v3.0.1
+
+Cleanup
+
 - v3.0
 
 Renamed to SwiftyRate
