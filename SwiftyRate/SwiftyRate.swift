@@ -119,7 +119,7 @@ public enum SwiftyRate {
        
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
-        let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
+        let rateAction = UIAlertAction(title: LocalizedText.rate, style: .destructive) { _ in
             isRemoved = true
             guard let url = URL(string: getStoreURL(forAppID: appID)) else { return }
             if #available(iOS 10.0, *) {
