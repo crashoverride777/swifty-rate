@@ -8,7 +8,7 @@ This helper will use the SKStoreReviewController (iOS 10.3) if its supported oth
 
 If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of app launches. It will than show further alerts in 4 month intervals until the limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
 
-![iOS Example Shots](https://raw.githubusercontent.com/crashoverride777/SwiftyRate/Image.png)
+![iOS Example Shots](Image.png)
 
 # Cocoa Pods
 
