@@ -39,7 +39,7 @@ private enum LocalizedText { // TODO
     
     static let title = "Enjoying \(appName)?"
     static let message = "Would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
-    static let rate = "Rate"
+    static let rate = "☆☆☆☆☆"
     static let cancel = "Cancel"
 }
 
