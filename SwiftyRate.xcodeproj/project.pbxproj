@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B4533F941DA2CD6500440CC0 /* SwiftyRate.h in Headers */ = {isa = PBXBuildFile; fileRef = B4533F921DA2CD6500440CC0 /* SwiftyRate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4533F9B1DA2CD7200440CC0 /* SwiftyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */; };
+		B4E0D2381E65C7A500E45E26 /* Image.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E0D2371E65C7A500E45E26 /* Image.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		B4533F921DA2CD6500440CC0 /* SwiftyRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyRate.h; sourceTree = "<group>"; };
 		B4533F931DA2CD6500440CC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRate.swift; sourceTree = "<group>"; };
+		B4E0D2371E65C7A500E45E26 /* Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Image.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 			children = (
 				B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */,
 				B4533F921DA2CD6500440CC0 /* SwiftyRate.h */,
+				B4E0D2371E65C7A500E45E26 /* Image.png */,
 				B4533F931DA2CD6500440CC0 /* Info.plist */,
 			);
 			path = SwiftyRate;
@@ -125,6 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4E0D2381E65C7A500E45E26 /* Image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
