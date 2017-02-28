@@ -38,7 +38,7 @@ private enum LocalizedText { // TODO
     static let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app"
     
     static let title = "Enjoying \(appName)?"
-    static let message = "Would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!"
+    static let message = "Would you mind taking a moment to rate it on the App Store? Thanks for your support!"
     static let rate = "☆☆☆☆☆"
     static let cancel = "Cancel"
 }
