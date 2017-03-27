@@ -21,7 +21,7 @@
 //    SOFTWARE.
 
 import UIKit
-//import StoreKit
+import StoreKit
 
 /// Get app store URL
 private func getStoreURL(forAppID appID: String) -> String {
@@ -40,7 +40,7 @@ private enum LocalizedText { // TODO
     static let title = "Enjoying \(appName)?"
     static let message = "Would you mind taking a moment to rate it on the App Store? Thanks for your support!"
     static let rate = "☆☆☆☆☆"
-    static let cancel = "Cancel"
+    static let cancel = "Not Now"
 }
 
 /// Keys
@@ -95,20 +95,19 @@ public enum SwiftyRate {
     
     /// Request review controller
     ///
+    ///
     /// - parameter forAppID: The app ID string for the app to rate.
     /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Set to 0 or negative number to test alert. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
     public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
-        
-        /*
+    
         // SKStoreReviewController
         #if os(iOS)
             if #available(iOS 10.3, *) {
-                SKStoreReviewController.request()
+                SKStoreReviewController.requestReview()
                 return
             }
         #endif
-        */
         
         // Custom alert
         guard let viewController = viewController else { return }
