@@ -54,6 +54,12 @@ To get your app ID, login to iTunes connect and go to MyApps-AppInformation and 
 
 # Release Notes
 
+- v3.1
+
+Updated to Swift 3.1
+
+Added SKStoreReviewController
+
 - v3.0.1
 
 Cleanup
