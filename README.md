@@ -58,6 +58,8 @@ Updated to Swift 3.1
 
 Added SKStoreReviewController
 
+Renamed "Cancel" button to "Not Now"
+
 - v3.0.1
 
 Cleanup
