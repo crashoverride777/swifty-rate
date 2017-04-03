@@ -26,14 +26,15 @@ As Apple describes in the documentation for SKStoreReviewController
 
 "Although you should call this method when it makes sense in the user experience flow of your app, the actual display of a rating/review request view is governed by App Store policy. Because this method may or may not present an alert, it's not appropriate to call it in response to a button tap or other user action."
 
-For the custom alert the best spot is to show it at app Launch
-
 ```swift
 // UIViewController
-SwiftyRate.request(from: self)
+
+SwiftyRate.request(from: self) // 18 app launches needed
+SwiftyRate.request(appLaunchesUntilFirstAlert: 15, from: self) // custom app launches
 
 // SpriteKit Scene (needs to be shown outside ViewDidLoad or it will not work)
-SwiftyRate.request(from: view?.window?.rootViewController)
+SwiftyRate.request(from: view?.window?.rootViewController) // 18 app launches needed
+SwiftyRate.request(appLaunchesUntilFirstAlert: 15, from: view?.window?.rootViewController) // custom app launches
 ```
 
 # Release Notes
