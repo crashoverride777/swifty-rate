@@ -4,7 +4,7 @@ A simple helper to show a SKStoreReviewController or custom rate game/app UIAler
 
 This helper will use the SKStoreReviewController (iOS 10.3) if its supported otherwise it will show a custom alert with similar rules and behaviours. Apple restricts the use of SKStoreReviewController to 3 times per year, the actual logic behind the scheduling is unknown. If the user has rated the app the alert will never show again until the app is uninstalled.
 
-If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of app launches. It will than show further alerts in 4 month intervals until the limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
+If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of requests. It will than show further alerts in 4 month intervals until the limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
 
 # Cocoa Pods
 
@@ -20,11 +20,13 @@ Copy the SwiftyRate.swift file into your project
 
 - Step 2:
 
-Request review e.g at app launch. 
+Request review
 
 As Apple describes in the documentation for SKStoreReviewController 
 
 "Although you should call this method when it makes sense in the user experience flow of your app, the actual display of a rating/review request view is governed by App Store policy. Because this method may or may not present an alert, it's not appropriate to call it in response to a button tap or other user action."
+
+
 
 By default this helper will offer 3 types of alert types (appLaunch, gameOver, buttonPressed). The number of times the request methods needs to be called until the 1st alert is shown depends on the type.
 
