@@ -66,6 +66,8 @@ The app ID is now fetched automatically
 
 Simplified request method (please check documentation again)
 
+Updated alert text
+
 - v3.1
 
 Updated to Swift 3.1
