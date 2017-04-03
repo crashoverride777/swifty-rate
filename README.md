@@ -26,39 +26,15 @@ As Apple describes in the documentation for SKStoreReviewController
 
 "Although you should call this method when it makes sense in the user experience flow of your app, the actual display of a rating/review request view is governed by App Store policy. Because this method may or may not present an alert, it's not appropriate to call it in response to a button tap or other user action."
 
-
-
-By default this helper will offer 3 types of alert types (appLaunch, gameOver, buttonPressed). The number of times the request methods needs to be called until the 1st alert is shown depends on the type.
-
-.appLaunch     = 18 times
-
-.gameOver      = 40 times
-
-.buttonPressed = 60 times
+For the custom alert the best spot is to show it at app Launch
 
 ```swift
 // UIViewController
-SwiftyRate.request(type: .appLaunch, from: self)
-SwiftyRate.request(type: .gameOver, from: self)
-SwiftyRate.request(type: .buttonPressed, from: self)
+SwiftyRate.request(from: self)
 
 // SpriteKit Scene (needs to be shown outside ViewDidLoad or it will not work)
-SwiftyRate.request(type: .appLaunch, from: view?.window?.rootViewController)
-SwiftyRate.request(type: .gameOver, from: view?.window?.rootViewController)
-SwiftyRate.request(type: .buttonPressed, from: view?.window?.rootViewController)
+SwiftyRate.request(from: view?.window?.rootViewController)
 ```
-
-Debug
-
-```swift
-// UIViewController
-SwiftyRate.request(type: .debug, from: self) 
-
-// SpriteKit scene
-SwiftyRate.request(type: .debug, from: view?.window?.rootViewController) 
-```
-
-Note: Should you forget to set this back to regular type this helper will change the type to .buttonPressed when app is in release mode
 
 # Release Notes
 
