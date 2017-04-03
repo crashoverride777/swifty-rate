@@ -28,7 +28,6 @@ As Apple describes in the documentation for SKStoreReviewController
 
 ```swift
 // UIViewController
-
 SwiftyRate.request(from: self) // 18 app launches needed
 SwiftyRate.request(appLaunchesUntilFirstAlert: 15, from: self) // custom app launches
 
