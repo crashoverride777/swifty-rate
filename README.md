@@ -31,7 +31,9 @@ As Apple describes in the documentation for SKStoreReviewController
 By default this helper will offer 3 types of alert types (appLaunch, gameOver, buttonPressed). The number of times the request methods needs to be called until the 1st alert is shown depends on the type.
 
 .appLaunch     = 18 times
+
 .gameOver      = 40 times
+
 .buttonPressed = 60 times
 
 ```swift
