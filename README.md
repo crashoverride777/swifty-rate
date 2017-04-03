@@ -28,29 +28,43 @@ As Apple describes in the documentation for SKStoreReviewController
 
 "Although you should call this method when it makes sense in the user experience flow of your app, the actual display of a rating/review request view is governed by App Store policy. Because this method may or may not present an alert, it's not appropriate to call it in response to a button tap or other user action."
 
+By default this helper will offer 3 types of alert types (appLaunch, gameOver, buttonPressed). The number of times the request methods needs to be called until the 1st alert is shown depends on the type.
+
+.appLaunch     = 18 times
+.gameOver      = 40 times
+.buttonPressed = 60 times
+
+UIViewController
 
 ```swift
-class ViewController: UIViewController {
-
-// NOTE: Use view did appear as viewDidLoad is to early to show a UIAlertController
-
-override func viewDidAppear(animated: Bool) { 
-        super.viewDidAppear(animated)
-       
-        // This way it will use the default app launches setting of 18.
-        SwiftyRate.request(forAppID: "Enter your app ID", from: self)
-        
-        // This way it will use your own custom app launches setting e.g 15.
-        // I would not go lower than 10-15 app launches.  
-        SwiftyRate.request(forAppID: "Enter your app ID", appLaunchesUntilFirstAlert: 15, from: self) 
-    }
-    
-// To test the alert you can set appLaunchesUntilFirstAlert to 0.
+SwiftyRate.request(type: .appLaunch, from: self)
+SwiftyRate.request(type: .gameOver, from: self)
+SwiftyRate.request(type: .buttonPressed, from: self)
 ```
 
-To get your app ID, login to iTunes connect and go to MyApps-AppInformation and you should see it under General Information.
+// SpriteKit Scene (needs to be shown outside ViewDidLoad or it will not work)
+
+```swift
+SwiftyRate.request(type: .appLaunch, from: view?.window?.rootViewController)
+SwiftyRate.request(type: .gameOver, from: view?.window?.rootViewController)
+SwiftyRate.request(type: .buttonPressed, from: view?.window?.rootViewController)
+``
+
+To test you can set the type to debug
+
+```swift
+SwiftyRate.request(type: .debug, from: self) 
+```
+
+Note: Should you forget to set this back to regular type this helper will change the type to .buttonPressed when app is in release mode
 
 # Release Notes
+
+- v3.2
+
+The app ID is now fetched automatically 
+
+Simplified request method (please check documentation again)
 
 - v3.1
 
