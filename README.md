@@ -1,7 +1,5 @@
 # SwiftyRate
 
-![Screenshot](Image.png)
-
 A simple helper to show a SKStoreReviewController or custom rate game/app UIAlertController.
 
 This helper will use the SKStoreReviewController (iOS 10.3) if its supported otherwise it will show a custom alert with similar rules and behaviours. Apple restricts the use of SKStoreReviewController to 3 times per year, the actual logic behind the scheduling is unknown. If the user has rated the app the alert will never show again until the app is uninstalled.
