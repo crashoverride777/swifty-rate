@@ -104,9 +104,9 @@ public enum SwiftyRate {
     
     /// Request rate app alert
     ///
-    /// - parameter requestsUntilFirstAlert: The request needed until first alert is shown. Set to negative value to test. Defaults to 18.
+    /// - parameter appLaunchesUntilFirstAlert: The request needed until first alert is shown. Set to negative value to test. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
-    public static func request(requestsUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
+    public static func request(appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
         
         // SKStoreReviewController
         #if os(iOS)
@@ -129,8 +129,8 @@ public enum SwiftyRate {
         // Show alert
         guard let viewController = viewController else { return }
         
-        if requestsUntilFirstAlert >= 0 {
-            guard !isRemoved, isTimeToShowAlert(requestsUntilFirstAlert: requestsUntilFirstAlert) else { return }
+        if appLaunchesUntilFirstAlert >= 0 {
+            guard !isRemoved, isTimeToShowAlert(appLaunchesUntilFirstAlert: appLaunchesUntilFirstAlert) else { return }
         }
         
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
@@ -226,7 +226,7 @@ private extension SwiftyRate {
 private extension SwiftyRate {
     
     /// Check if alerts needs to be showed
-    static func isTimeToShowAlert(requestsUntilFirstAlert: Int) -> Bool {
+    static func isTimeToShowAlert(appLaunchesUntilFirstAlert: Int) -> Bool {
         
         // Get date
         let date = Date()
@@ -260,11 +260,11 @@ private extension SwiftyRate {
         // Show alert if needed
         requestCounter += 1
         
-        if requestCounter == requestsUntilFirstAlert {
+        if requestCounter == appLaunchesUntilFirstAlert {
             alertsShownThisYear += 1
             savedMonth = month
             return true
-        } else if requestCounter > requestsUntilFirstAlert, month >= (savedMonth + 4) {
+        } else if requestCounter > appLaunchesUntilFirstAlert, month >= (savedMonth + 4) {
             alertsShownThisYear += 1
             savedMonth = month
             return true
