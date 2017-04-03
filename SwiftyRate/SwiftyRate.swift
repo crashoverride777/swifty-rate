@@ -112,9 +112,8 @@ public enum SwiftyRate {
     
     /// Request rate app alert
     ///
-    /// - parameter type: The request type e.g appLaunch.
     /// - parameter viewController: The view controller that will present the alert.
-    public static func request(type: RequestType, from viewController: UIViewController?) {
+    public static func request(from viewController: UIViewController?) {
         
         // SKStoreReviewController
         #if os(iOS)
@@ -129,28 +128,13 @@ public enum SwiftyRate {
         // Check app id
         guard let appID = appID else {
             fetchAppID {
-                request(type: type, from: viewController)
+                request(from: viewController)
             }
             return
         }
         
         // Update requests
-        let requestsUntilFirstAlert: Int
-        
-        switch type {
-        case .debug:
-            #if DEBUG
-                requestsUntilFirstAlert = -1
-            #else
-                requestsUntilFirstAlert = 60
-            #endif
-        case .appLaunch:
-            requestsUntilFirstAlert = 18
-        case .gameOver:
-            requestsUntilFirstAlert = 40
-        case .buttonPressed:
-            requestsUntilFirstAlert = 40
-        }
+        let requestsUntilFirstAlert: Int = 18
         
         // Show alert
         guard let viewController = viewController else { return }
