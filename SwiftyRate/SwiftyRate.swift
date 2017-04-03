@@ -23,30 +23,36 @@
 import UIKit
 import StoreKit
 
+/// Data url
+private let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
+
+/// JSON Keys
+private enum JSONKey: String {
+    case app_id = "trackId"
+}
+
 /// Get app store URL
-private func getStoreURL(forAppID appID: String) -> String {
+private func getStoreURL(forID appID: Int) -> String {
     #if os(iOS)
-        return "itms-apps://itunes.apple.com/app/id" + appID
+        return "itms-apps://itunes.apple.com/app/id\(appID)"
     #endif
     #if os(tvOS)
-        return "com.apple.TVAppStore://itunes.apple.com/app/id" + appID
+        return "com.apple.TVAppStore://itunes.apple.com/app/id\(appID)"
     #endif
 }
 
 /// Alert strings
 private enum LocalizedText { // TODO
-    static let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app"
-    
-    static let title = "Enjoying \(appName)?"
-    static let message = "Would you mind taking a moment to rate it on the App Store? Thanks for your support!"
+    static let title = "Enjoying \(Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app")?"
+    static let message = "Tap the stars to rate it on the App Store."
     static let rate = "☆☆☆☆☆"
-    static let cancel = "Not Now"
+    static let notNow = "Not Now"
 }
 
 /// Keys
 private enum Key: String {
     case isRemoved           = "SwiftyRateIsRemovedKey"
-    case currentAppLaunches  = "SwiftyRateAppLaunchesKey"
+    case requestCounter      = "SwiftyRateRequestCounterKey"
     case alertsShownThisYear = "SwiftyRateShownThisYearKey"
     case savedMonth          = "SwiftyRateSavedMonthKey"
     case savedYear           = "SwiftyRateSavedYearKey"
@@ -61,16 +67,27 @@ public enum SwiftyRate {
     
     // MARK: - Properties
     
+    /// Request type
+    public enum RequestType {
+        case debug
+        case appLaunch
+        case gameOver
+        case buttonPressed
+    }
+    
+    /// App ID
+    fileprivate static var appID: Int?
+    
     /// Is removed
     fileprivate static var isRemoved: Bool {
         get { return UserDefaults.standard.bool(forKey: Key.isRemoved.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: Key.isRemoved.rawValue) }
     }
     
-    /// Current app launches
-    fileprivate static var currentAppLaunches: Int {
-        get { return UserDefaults.standard.integer(forKey: Key.currentAppLaunches.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.currentAppLaunches.rawValue) }
+    /// Request counter
+    fileprivate static var requestCounter: Int {
+        get { return UserDefaults.standard.integer(forKey: Key.requestCounter.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: Key.requestCounter.rawValue) }
     }
     
     /// Alerts shown this year
@@ -93,14 +110,12 @@ public enum SwiftyRate {
     
     // MARK: - Methods
     
-    /// Request review controller
+    /// Request rate app alert
     ///
-    ///
-    /// - parameter forAppID: The app ID string for the app to rate.
-    /// - parameter appLaunchesUntilFirstAlert: The app launches required until the first alert is shown. Set to 0 or negative number to test alert. Defaults to 18.
+    /// - parameter type: The request type e.g appLaunch.
     /// - parameter viewController: The view controller that will present the alert.
-    public static func request(forAppID appID: String, appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
-    
+    public static func request(type: RequestType, from viewController: UIViewController?) {
+        
         // SKStoreReviewController
         #if os(iOS)
             if #available(iOS 10.3, *) {
@@ -110,17 +125,45 @@ public enum SwiftyRate {
         #endif
         
         // Custom alert
+        
+        // Check app id
+        guard let appID = appID else {
+            fetchAppID {
+                request(type: type, from: viewController)
+            }
+            return
+        }
+        
+        // Update requests
+        let requestsUntilFirstAlert: Int
+        
+        switch type {
+        case .debug:
+            #if DEBUG
+                requestsUntilFirstAlert = -1
+            #else
+                requestsUntilFirstAlert = 60
+            #endif
+        case .appLaunch:
+            requestsUntilFirstAlert = 18
+        case .gameOver:
+            requestsUntilFirstAlert = 40
+        case .buttonPressed:
+            requestsUntilFirstAlert = 40
+        }
+        
+        // Show alert
         guard let viewController = viewController else { return }
         
-        if appLaunchesUntilFirstAlert > 0 {
-            guard !isRemoved, isTimeToShowAlert(appLaunches: appLaunchesUntilFirstAlert) else { return }
+        if requestsUntilFirstAlert >= 0 {
+            guard !isRemoved, isTimeToShowAlert(requestsUntilFirstAlert: requestsUntilFirstAlert) else { return }
         }
-       
+        
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
-        let rateAction = UIAlertAction(title: LocalizedText.rate, style: .destructive) { _ in
+        let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
             isRemoved = true
-            guard let url = URL(string: getStoreURL(forAppID: appID)) else { return }
+            guard let url = URL(string: getStoreURL(forID: appID)) else { return }
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
             } else {
@@ -129,7 +172,7 @@ public enum SwiftyRate {
         }
         alertController.addAction(rateAction)
         
-        let cancelAction = UIAlertAction(title: LocalizedText.cancel, style: .default)
+        let cancelAction = UIAlertAction(title: LocalizedText.notNow, style: .default)
         alertController.addAction(cancelAction)
         
         DispatchQueue.main.async {
@@ -138,12 +181,78 @@ public enum SwiftyRate {
     }
 }
 
-// MARK: - Internal
+// MARK: - Fetch App ID
+
+private extension SwiftyRate {
+    
+    /// Fetch app id
+    static func fetchAppID(handler: @escaping () -> ()) {
+        guard let url = URL(string: dataURL) else {
+            print("SwiftyRate url error")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            
+            // Error
+            if let error = error {
+                print("SwiftyRate data with task error: \(error.localizedDescription)")
+                return
+            }
+            
+            // Check response
+            guard let _ = response else {
+                print("SwiftyRate response error")
+                return
+            }
+            
+            // Check data
+            guard let data = data else {
+                print("SwiftyRate data error")
+                return
+            }
+            
+            // JSON
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                
+                // Get data
+                guard let jsonData = json as? [String: Any] else {
+                    print("SwiftyRate json data object error")
+                    return
+                }
+                
+                // Get results
+                guard let results = jsonData["results"] as? [[String: Any]] else {
+                    print("SwiftyRate json results error")
+                    return
+                }
+                
+                // Update app id
+                results.forEach {
+                    appID = $0[JSONKey.app_id.rawValue] as? Int
+                }
+            
+                // Return handler
+                DispatchQueue.main.async {
+                    guard appID != nil else { return }
+                    handler()
+                }
+            }
+                
+            catch let error {
+                print("SwiftyRate JSON parse error" + error.localizedDescription)
+            }
+        }.resume()
+    }
+}
+
+// MARK: - Check Time To Show Alert
 
 private extension SwiftyRate {
     
     /// Check if alerts needs to be showed
-    static func isTimeToShowAlert(appLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
+    static func isTimeToShowAlert(requestsUntilFirstAlert: Int) -> Bool {
         
         // Get date
         let date = Date()
@@ -168,20 +277,20 @@ private extension SwiftyRate {
         if year > savedYear {
             savedYear = year
             alertsShownThisYear = 0
-            currentAppLaunches = 0
+            requestCounter = 0
         }
         
         // Check that max (3) alerts shown per year is not reached
         guard alertsShownThisYear < 3 else { return false }
         
         // Show alert if needed
-        currentAppLaunches += 1
+        requestCounter += 1
         
-        if currentAppLaunches == appLaunchesUntilFirstAlert {
+        if requestCounter == requestsUntilFirstAlert {
             alertsShownThisYear += 1
             savedMonth = month
             return true
-        } else if currentAppLaunches > appLaunchesUntilFirstAlert, month >= (savedMonth + 4) {
+        } else if requestCounter > requestsUntilFirstAlert, month >= (savedMonth + 4) {
             alertsShownThisYear += 1
             savedMonth = month
             return true
