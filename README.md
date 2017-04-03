@@ -34,26 +34,26 @@ By default this helper will offer 3 types of alert types (appLaunch, gameOver, b
 .gameOver      = 40 times
 .buttonPressed = 60 times
 
-UIViewController
-
 ```swift
+// UIViewController
 SwiftyRate.request(type: .appLaunch, from: self)
 SwiftyRate.request(type: .gameOver, from: self)
 SwiftyRate.request(type: .buttonPressed, from: self)
-```
 
 // SpriteKit Scene (needs to be shown outside ViewDidLoad or it will not work)
-
-```swift
 SwiftyRate.request(type: .appLaunch, from: view?.window?.rootViewController)
 SwiftyRate.request(type: .gameOver, from: view?.window?.rootViewController)
 SwiftyRate.request(type: .buttonPressed, from: view?.window?.rootViewController)
-``
+```
 
-To test you can set the type to debug
+Debug
 
 ```swift
+// UIViewController
 SwiftyRate.request(type: .debug, from: self) 
+
+// SpriteKit scene
+SwiftyRate.request(type: .debug, from: view?.window?.rootViewController) 
 ```
 
 Note: Should you forget to set this back to regular type this helper will change the type to .buttonPressed when app is in release mode
