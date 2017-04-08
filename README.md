@@ -38,6 +38,10 @@ SwiftyRate.request(appLaunchesUntilFirstAlert: 15, from: view?.window?.rootViewC
 
 # Release Notes
 
+- v3.2.1
+
+Fixed request method when using custom app launches
+
 - v3.2
 
 The app ID is now fetched automatically 
