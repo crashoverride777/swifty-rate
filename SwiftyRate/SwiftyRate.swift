@@ -121,7 +121,7 @@ public enum SwiftyRate {
         // Check app id
         guard let appID = appID else {
             fetchAppID {
-                request(from: viewController)
+                request(appLaunchesUntilFirstAlert: appLaunchesUntilFirstAlert, from: viewController)
             }
             return
         }
