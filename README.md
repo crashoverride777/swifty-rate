@@ -29,11 +29,11 @@ As Apple describes in the documentation for SKStoreReviewController
 ```swift
 // UIViewController
 SwiftyRate.request(from: self) // 18 app launches needed
-SwiftyRate.request(appLaunchesUntilFirstAlert: 15, from: self) // custom app launches
+SwiftyRate.request(afterAppLaunches: 15, from: self) // custom app launches
 
 // SpriteKit Scene (needs to be shown outside ViewDidLoad or it will not work)
 SwiftyRate.request(from: view?.window?.rootViewController) // 18 app launches needed
-SwiftyRate.request(appLaunchesUntilFirstAlert: 15, from: view?.window?.rootViewController) // custom app launches
+SwiftyRate.request(afterAppLaunches: 15, from: view?.window?.rootViewController) // custom app launches
 ```
 
 # Release Notes
