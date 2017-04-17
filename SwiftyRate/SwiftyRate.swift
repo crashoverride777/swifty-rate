@@ -23,34 +23,16 @@
 import UIKit
 import StoreKit
 
-/// Data url
-private let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
-
-/// JSON Keys
-private enum JSONKey: String {
-    case app_id = "trackId"
-}
-
-/// Get app store URL
-private func getStoreURL(forID appID: Int) -> String {
-    #if os(iOS)
-        return "itms-apps://itunes.apple.com/app/id\(appID)"
-    #endif
-    #if os(tvOS)
-        return "com.apple.TVAppStore://itunes.apple.com/app/id\(appID)"
-    #endif
-}
-
-/// Alert strings
-private enum LocalizedText { // TODO
+/// Localized text - TODO
+private enum LocalizedText {
     static let title = "Enjoying \(Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app")?"
     static let message = "Tap the stars to rate it on the App Store."
     static let rate = "☆☆☆☆☆"
     static let notNow = "Not Now"
 }
 
-/// Keys
-private enum Key: String {
+/// User default keys
+private enum UserDefaultKey: String {
     case isRemoved           = "SwiftyRateIsRemovedKey"
     case requestCounter      = "SwiftyRateRequestCounterKey"
     case alertsShownThisYear = "SwiftyRateShownThisYearKey"
@@ -61,52 +43,55 @@ private enum Key: String {
 /**
  SwiftyRateAppAlert
  
- A helper for showing a SKStoreReviewController or rate game UIAlertController.
+ A helper for showing a SKStoreReviewController or a custom rate game UIAlertController.
  */
 public enum SwiftyRate {
     
     // MARK: - Properties
+    
+    /// Data url
+    fileprivate static let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
     
     /// App ID
     fileprivate static var appID: Int?
     
     /// Is removed
     fileprivate static var isRemoved: Bool {
-        get { return UserDefaults.standard.bool(forKey: Key.isRemoved.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.isRemoved.rawValue) }
+        get { return UserDefaults.standard.bool(forKey: UserDefaultKey.isRemoved.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.isRemoved.rawValue) }
     }
     
     /// Request counter
     fileprivate static var requestCounter: Int {
-        get { return UserDefaults.standard.integer(forKey: Key.requestCounter.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.requestCounter.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.requestCounter.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.requestCounter.rawValue) }
     }
     
     /// Alerts shown this year
     fileprivate static var alertsShownThisYear: Int {
-        get { return UserDefaults.standard.integer(forKey: Key.alertsShownThisYear.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.alertsShownThisYear.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.alertsShownThisYear.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.alertsShownThisYear.rawValue) }
     }
     
     /// Saved month
     fileprivate static var savedMonth: Int {
-        get { return UserDefaults.standard.integer(forKey: Key.savedMonth.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.savedMonth.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.savedMonth.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.savedMonth.rawValue) }
     }
     
     /// Saved year
     fileprivate static var savedYear: Int {
-        get { return UserDefaults.standard.integer(forKey: Key.savedYear.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: Key.savedYear.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.savedYear.rawValue) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.savedYear.rawValue) }
     }
     
     // MARK: - Methods
     
     /// Request rate app alert
     ///
-    /// - parameter appLaunchesUntilFirstAlert: The request needed until first alert is shown. Set to negative value to test. Defaults to 18.
+    /// - parameter appLaunchesUntilFirstAlert: The requests needed until first alert is shown. Set to negative value to test. Defaults to 18.
     /// - parameter viewController: The view controller that will present the alert.
-    public static func request(appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
+    public static func request(afterAppLaunches appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
         
         // SKStoreReviewController
         #if os(iOS)
@@ -121,7 +106,7 @@ public enum SwiftyRate {
         // Check app id
         guard let appID = appID else {
             fetchAppID {
-                request(appLaunchesUntilFirstAlert: appLaunchesUntilFirstAlert, from: viewController)
+                request(afterAppLaunches: appLaunchesUntilFirstAlert, from: viewController)
             }
             return
         }
@@ -130,14 +115,14 @@ public enum SwiftyRate {
         guard let viewController = viewController else { return }
         
         if appLaunchesUntilFirstAlert >= 0 {
-            guard !isRemoved, isTimeToShowAlert(appLaunchesUntilFirstAlert: appLaunchesUntilFirstAlert) else { return }
+            guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else { return }
         }
         
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
         let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
             isRemoved = true
-            guard let url = URL(string: getStoreURL(forID: appID)) else { return }
+            guard let url = URL(string: getStoreURL(forAppID: appID)) else { return }
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
             } else {
@@ -188,28 +173,26 @@ private extension SwiftyRate {
             
             // JSON
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                
-                // Get data
-                guard let jsonData = json as? [String: Any] else {
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
                     print("SwiftyRate json data object error")
                     return
                 }
                 
                 // Get results
-                guard let results = jsonData["results"] as? [[String: Any]] else {
+                guard let results = json["results"] as? [[String: Any]] else {
                     print("SwiftyRate json results error")
                     return
                 }
                 
                 // Update app id
                 results.forEach {
-                    appID = $0[JSONKey.app_id.rawValue] as? Int
+                    appID = $0["trackId"] as? Int
                 }
+                
+                guard appID != nil else { return }
             
                 // Return handler
                 DispatchQueue.main.async {
-                    guard appID != nil else { return }
                     handler()
                 }
             }
@@ -221,12 +204,12 @@ private extension SwiftyRate {
     }
 }
 
-// MARK: - Check Time To Show Alert
+// MARK: - Check If Time To Show Alert
 
 private extension SwiftyRate {
     
     /// Check if alerts needs to be showed
-    static func isTimeToShowAlert(appLaunchesUntilFirstAlert: Int) -> Bool {
+    static func isTimeToShowAlert(forAppLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
         
         // Get date
         let date = Date()
@@ -272,5 +255,20 @@ private extension SwiftyRate {
         
         // No alert is needed to show
         return false
+    }
+}
+
+// MARK: - Get iTunes Web URL
+
+private extension SwiftyRate {
+    
+    /// Get app store URL
+    static func getStoreURL(forAppID appID: Int) -> String {
+        #if os(iOS)
+            return "itms-apps://itunes.apple.com/app/id\(appID)"
+        #endif
+        #if os(tvOS)
+            return "com.apple.TVAppStore://itunes.apple.com/app/id\(appID)"
+        #endif
     }
 }
