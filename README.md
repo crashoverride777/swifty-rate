@@ -46,6 +46,8 @@ if let viewController = view?.window?.rootViewController {
 
 Updated request method (please see instructions)
 
+Print statements will now only print in DEBUG mode
+
 Cleanup
 
 - v3.2.2
