@@ -26,17 +26,27 @@ As Apple describes in the documentation for SKStoreReviewController
 
 "Although you should call this method when it makes sense in the user experience flow of your app, the actual display of a rating/review request view is governed by App Store policy. Because this method may or may not present an alert, it's not appropriate to call it in response to a button tap or other user action."
 
+UIViewController
 ```swift
-// UIViewController
 SwiftyRate.request(from: self) // 18 app launches needed
-SwiftyRate.request(afterAppLaunches: 15, from: self) // custom app launches
+SwiftyRate.request(from: self, afterAppLaunches: 15) // custom app launches
+```
 
-// SpriteKit Scene (needs to be shown outside ViewDidLoad or it will not work)
-SwiftyRate.request(from: view?.window?.rootViewController) // 18 app launches needed
-SwiftyRate.request(afterAppLaunches: 15, from: view?.window?.rootViewController) // custom app launches
+SKScene (needs to be called outside/after DidMoveToView or it will not work)
+```swift
+if let viewController = view?.window?.rootViewController {
+     SwiftyRate.request(from: viewController) // 18 app launches needed
+     SwiftyRate.request(from: viewController, afterAppLaunches: 15) // custom app launches
+}
 ```
 
 # Release Notes
+
+- v3.2.3
+
+Updated request method (please see instructions)
+
+Cleanup
 
 - v3.2.2
 
