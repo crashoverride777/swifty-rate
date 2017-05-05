@@ -89,9 +89,9 @@ public enum SwiftyRate {
     
     /// Request rate app alert
     ///
+    /// - parameter viewController: The view controller that will present the UIAlertController.
     /// - parameter appLaunchesUntilFirstAlert: The requests needed until first alert is shown. Set to negative value to test. Defaults to 18.
-    /// - parameter viewController: The view controller that will present the alert.
-    public static func request(afterAppLaunches appLaunchesUntilFirstAlert: Int = 18, from viewController: UIViewController?) {
+    public static func request(from viewController: UIViewController, afterAppLaunches appLaunchesUntilFirstAlert: Int = 18) {
         
         // SKStoreReviewController
         #if os(iOS)
@@ -106,14 +106,12 @@ public enum SwiftyRate {
         // Check app id
         guard let appID = appID else {
             fetchAppID {
-                request(afterAppLaunches: appLaunchesUntilFirstAlert, from: viewController)
+                request(from: viewController, afterAppLaunches: appLaunchesUntilFirstAlert)
             }
             return
         }
     
         // Show alert
-        guard let viewController = viewController else { return }
-        
         if appLaunchesUntilFirstAlert >= 0 {
             guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else { return }
         }
@@ -147,7 +145,7 @@ private extension SwiftyRate {
     /// Fetch app id
     static func fetchAppID(handler: @escaping () -> ()) {
         guard let url = URL(string: dataURL) else {
-            print("SwiftyRate url error")
+            print("SwiftyRate url session url error")
             return
         }
         
@@ -155,32 +153,32 @@ private extension SwiftyRate {
             
             // Error
             if let error = error {
-                print("SwiftyRate data with task error: \(error.localizedDescription)")
+                print("SwiftyRate url session data with task error: \(error.localizedDescription)")
                 return
             }
             
             // Check response
             guard let _ = response else {
-                print("SwiftyRate response error")
+                print("SwiftyRate url session response error")
                 return
             }
             
             // Check data
             guard let data = data else {
-                print("SwiftyRate data error")
+                print("SwiftyRate url session data error")
                 return
             }
             
             // JSON
             do {
                 guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                    print("SwiftyRate json data object error")
+                    print("SwiftyRate url session json data object error")
                     return
                 }
                 
                 // Get results
                 guard let results = json["results"] as? [[String: Any]] else {
-                    print("SwiftyRate json results error")
+                    print("SwiftyRate url session json results error")
                     return
                 }
                 
@@ -198,7 +196,7 @@ private extension SwiftyRate {
             }
                 
             catch let error {
-                print("SwiftyRate JSON parse error" + error.localizedDescription)
+                print("SwiftyRate url session JSON parse error" + error.localizedDescription)
             }
         }.resume()
     }
@@ -218,8 +216,29 @@ private extension SwiftyRate {
         formatter.dateFormat = "MM.yyyy"
         let dateResult = formatter.string(from: date)
         
-        guard let monthString = dateResult.components(separatedBy: ".").first, let month = Int(monthString) else { return false }
-        guard let yearString = dateResult.components(separatedBy: ".").last, let year = Int(yearString) else { return false }
+        // Get month string
+        guard let monthString = dateResult.components(separatedBy: ".").first else {
+            print("SwiftyRate month string error")
+            return false
+        }
+        
+        // Get month int
+        guard let month = Int(monthString) else {
+            print("SwiftyRate month int error")
+            return false
+        }
+        
+        // Get year string
+        guard let yearString = dateResult.components(separatedBy: ".").last else {
+            print("SwiftyRate year string error")
+            return false
+        }
+        
+        // Get year int
+        guard let year = Int(yearString) else {
+            print("SwiftyRate year int error")
+            return false
+        }
         
         // Update saved month/year if never set before
         if savedMonth == 0 {
@@ -269,6 +288,18 @@ private extension SwiftyRate {
         #endif
         #if os(tvOS)
             return "com.apple.TVAppStore://itunes.apple.com/app/id\(appID)"
+        #endif
+    }
+}
+
+// MARK: - Print 
+
+private extension SwiftyRate {
+    
+    /// Overrides the default print method so it print statements only show when in DEBUG mode
+    static func print(_ items: Any...) {
+        #if DEBUG
+            Swift.print(items)
         #endif
     }
 }
