@@ -1,5 +1,10 @@
 # SwiftyRate
 
+# SwiftyRate
+
+iOS 11 note: Apple has updated the app store guidlines and it seems that with iOS 11 it is no longer allowed to show custom review prompts. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS. This means I will mostly delete this repostitory once iOS 11 is released because using SKStoreReviewController is 1 line of code. Please bear this in mind when downloading.
+
+
 A simple helper to show a SKStoreReviewController (iOS only) or custom rate game/app UIAlertController. This helper can be used on both iOS and tvOS.
 
 This helper will use the SKStoreReviewController (iOS 10.3) if its supported otherwise it will show a custom alert with similar rules and behaviours. Apple restricts the use of SKStoreReviewController to 3 times per year, the actual logic behind the scheduling is unknown. If the user has rated the app the alert will never show again until the app is uninstalled.
@@ -7,12 +12,6 @@ This helper will use the SKStoreReviewController (iOS 10.3) if its supported oth
 I decided to keep this helper very simple by simply showing the custom rate app alert after a set amount of app launches. I decided to not go down the route of looking for things such as  
 
 If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of app launches. It will than show further alerts in 4 month intervals until the limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
-
-# Cocoa Pods
-
-I know that the current way with copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. Stay tuned.
-
-In the meantime I would create a folder on your Mac, called something like SharedFiles, and drag the swift file(s) into this folder. Than drag the files from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects.
 
 # How to use
 
