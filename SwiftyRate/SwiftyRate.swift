@@ -31,6 +31,18 @@ private enum LocalizedText {
     static let notNow = "Not Now"
 }
 
+// MARK: - Get iTunes Web URL
+
+private enum ITunesURL: String {
+    
+    #if os(iOS)
+        case base = "itms-apps://itunes.apple.com/app/id"
+    #endif
+    #if os(tvOS)
+        case base = "com.apple.TVAppStore://itunes.apple.com/app/id"
+    #endif
+}
+
 /// User default keys
 private enum UserDefaultKey: String {
     case isRemoved           = "SwiftyRateIsRemovedKey"
@@ -50,37 +62,37 @@ public enum SwiftyRate {
     // MARK: - Properties
     
     /// Data url
-    fileprivate static let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
+    private static let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
     
     /// App ID
-    fileprivate static var appID: Int?
+    private static var appID: Int?
     
     /// Is removed
-    fileprivate static var isRemoved: Bool {
+    private static var isRemoved: Bool {
         get { return UserDefaults.standard.bool(forKey: UserDefaultKey.isRemoved.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.isRemoved.rawValue) }
     }
     
     /// Request counter
-    fileprivate static var requestCounter: Int {
+    private static var requestCounter: Int {
         get { return UserDefaults.standard.integer(forKey: UserDefaultKey.requestCounter.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.requestCounter.rawValue) }
     }
     
     /// Alerts shown this year
-    fileprivate static var alertsShownThisYear: Int {
+    private static var alertsShownThisYear: Int {
         get { return UserDefaults.standard.integer(forKey: UserDefaultKey.alertsShownThisYear.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.alertsShownThisYear.rawValue) }
     }
     
     /// Saved month
-    fileprivate static var savedMonth: Int {
+    private static var savedMonth: Int {
         get { return UserDefaults.standard.integer(forKey: UserDefaultKey.savedMonth.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.savedMonth.rawValue) }
     }
     
     /// Saved year
-    fileprivate static var savedYear: Int {
+    private static var savedYear: Int {
         get { return UserDefaults.standard.integer(forKey: UserDefaultKey.savedYear.rawValue) }
         set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.savedYear.rawValue) }
     }
@@ -120,7 +132,7 @@ public enum SwiftyRate {
         
         let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
             isRemoved = true
-            guard let url = URL(string: getStoreURL(forAppID: appID)) else { return }
+            guard let url = URL(string: ITunesURL.base.rawValue + "\(appID)") else { return }
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
             } else {
@@ -256,12 +268,13 @@ private extension SwiftyRate {
             requestCounter = 0
         }
         
-        // Check that max (3) alerts shown per year is not reached
+        // Check that max number of 3 alerts shown per year is not reached
         guard alertsShownThisYear < 3 else { return false }
         
-        // Show alert if needed
+        // Update request counter
         requestCounter += 1
         
+        // Show alert if needed
         if requestCounter == appLaunchesUntilFirstAlert {
             alertsShownThisYear += 1
             savedMonth = month
@@ -274,21 +287,6 @@ private extension SwiftyRate {
         
         // No alert is needed to show
         return false
-    }
-}
-
-// MARK: - Get iTunes Web URL
-
-private extension SwiftyRate {
-    
-    /// Get app store URL
-    static func getStoreURL(forAppID appID: Int) -> String {
-        #if os(iOS)
-            return "itms-apps://itunes.apple.com/app/id\(appID)"
-        #endif
-        #if os(tvOS)
-            return "com.apple.TVAppStore://itunes.apple.com/app/id\(appID)"
-        #endif
     }
 }
 
