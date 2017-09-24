@@ -43,6 +43,10 @@ if let viewController = view?.window?.rootViewController {
 
 # Release Notes
 
+- v3.2.4
+
+Swift 4 update
+
 - v3.2.3
 
 Updated request method (please see instructions)
