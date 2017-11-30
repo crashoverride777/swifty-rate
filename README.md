@@ -1,7 +1,6 @@
 # SwiftyRate
 
-iOS 11 note: Apple has updated the app store guidlines and it seems that with iOS 11 it is no longer allowed to show custom review prompts. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS. This means I will mostly delete this repostitory once iOS 11 is released because using SKStoreReviewController is 1 line of code. Please bear this in mind when downloading.
-
+iOS 11 note: Apple has updated the app store guidlines and it seems that with iOS 11 it is no longer allowed to show custom review prompts. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS.
 
 A simple helper to show a SKStoreReviewController (iOS only) or custom rate game/app UIAlertController. This helper can be used on both iOS and tvOS.
 
