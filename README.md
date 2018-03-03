@@ -15,19 +15,7 @@ If SKStoreReviewController is not supported than this helper will show a custom 
 CocoaPods is a dependency manager for Cocoa projects. You can install it with the following command:
 
 ```swift
-$ gem install cocoapods
-```
-
-To integrate SwiftyRate into your Xcode project using CocoaPods, specify it in your Podfile:
-
-```swift
 pod 'SwiftyRate'
-```
-
-Then, run the following command:
-
-```swift
-$ pod install
 ```
 
 You can also download the CocoaPods app for macOS and manage your pods this way.
