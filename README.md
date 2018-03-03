@@ -34,7 +34,7 @@ You can also download the CocoaPods app for macOS and manage your pods this way.
 
 https://cocoapods.org/app
 
-# Set-Up
+# Usage
 
 - Step 1: Add the SwiftyMusic.swift file to your project or if you used CocoaPods add the 
 
