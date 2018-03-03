@@ -10,27 +10,28 @@ I decided to keep this helper very simple by simply showing the custom rate app 
 
 If SKStoreReviewController is not supported than this helper will show a custom rate app alert after a set amount of app launches. It will than show further alerts in 4 month intervals until the limit of 3 alerts per year has been reached. Once a new year has started everything will reset and start again.
 
-# Cocoa Pods
+## Requirements
 
-CocoaPods is a dependency manager for Cocoa projects. You can install it with the following command:
+- iOS 9.3+
+- Swift 4.0+
+
+## Installation
+
+CocoaPods is a dependency manager for Cocoa projects. Simply install the pod by adding the following line to your pod file
 
 ```swift
 pod 'SwiftyRate'
 ```
 
-You can also download the CocoaPods app for macOS and manage your pods this way.
+Altenatively you can drag the swift file(s) manually into your project.
 
-https://cocoapods.org/app
+## Usage
 
-# Usage
-
-- Step 1: Add the SwiftyMusic.swift file to your project or if you used CocoaPods add the 
+- Step 1: Add the import statment when you installed via cocoa pods. 
 
 ```swift
 import SwiftyRate 
 ```
-
-statement to your .swift file(s).
 
 - Step 2: Request review
 
