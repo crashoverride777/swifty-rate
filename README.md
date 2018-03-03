@@ -21,13 +21,7 @@ $ gem install cocoapods
 To integrate SwiftyRate into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```swift
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.3.0'
-use_frameworks!
-
-target '<Your Target Name>' do
-    pod 'SwiftyRate'
-end
+pod 'SwiftyRate'
 ```
 
 Then, run the following command:
@@ -69,49 +63,3 @@ if let viewController = view?.window?.rootViewController {
      SwiftyRate.request(from: viewController, afterAppLaunches: 15) // custom app launches
 }
 ```
-
-# Release Notes
-
-- v3.2.4
-
-Swift 4 update
-
-- v3.2.3
-
-Updated request method (please see instructions)
-
-Print statements will now only print in DEBUG mode
-
-Cleanup
-
-- v3.2.2
-
-Cleanup
-
-- v3.2.1
-
-Fixed request method when using custom app launches
-
-- v3.2
-
-The app ID is now fetched automatically 
-
-Updated alert text
-
-- v3.1
-
-Updated to Swift 3.1
-
-Added SKStoreReviewController
-
-Renamed "Cancel" button to "Not Now"
-
-- v3.0.1
-
-Cleanup
-
-- v3.0
-
-Renamed to SwiftyRate
-
-Redesigned to behave more like the upcoming SKStoreReviewController
