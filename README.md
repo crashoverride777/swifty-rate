@@ -21,13 +21,13 @@ Altenatively you can drag the swift file(s) manually into your project.
 
 ## Usage
 
-- Step 1: Add the import statment when you installed via cocoa pods. 
+- Add the import statment when you installed via cocoa pods. 
 
 ```swift
 import SwiftyRate 
 ```
 
-- Step 2: Request review
+- Request review
 
 As Apple describes in the documentation for SKStoreReviewController 
 
@@ -35,14 +35,12 @@ As Apple describes in the documentation for SKStoreReviewController
 
 UIViewController
 ```swift
-SwiftyRate.request(from: self) // 18 app launches needed
-SwiftyRate.request(from: self, afterAppLaunches: 15) // custom app launches
+SwiftyRate.request(from: self, afterAppLaunches: 15)
 ```
 
 SKScene (needs to be called outside/after DidMoveToView or it will not work)
 ```swift
 if let viewController = view?.window?.rootViewController {
-     SwiftyRate.request(from: viewController) // 18 app launches needed
-     SwiftyRate.request(from: viewController, afterAppLaunches: 15) // custom app launches
+     SwiftyRate.request(from: viewController, afterAppLaunches: 15)
 }
 ```
