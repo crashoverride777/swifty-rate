@@ -31,27 +31,6 @@ private enum LocalizedText {
     static let notNow = "Not Now"
 }
 
-// MARK: - Get iTunes Web URL
-
-private enum ITunesURL: String {
-    
-    #if os(iOS)
-        case base = "itms-apps://itunes.apple.com/app/id"
-    #endif
-    #if os(tvOS)
-        case base = "com.apple.TVAppStore://itunes.apple.com/app/id"
-    #endif
-}
-
-/// User default keys
-private enum UserDefaultKey: String {
-    case isRemoved           = "SwiftyRateIsRemovedKey"
-    case requestCounter      = "SwiftyRateRequestCounterKey"
-    case alertsShownThisYear = "SwiftyRateShownThisYearKey"
-    case savedMonth          = "SwiftyRateSavedMonthKey"
-    case savedYear           = "SwiftyRateSavedYearKey"
-}
-
 /**
  SwiftyRateAppAlert
  
@@ -61,49 +40,51 @@ public enum SwiftyRate {
     
     // MARK: - Properties
     
-    /// Data url
-    private static let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
+    private static let iTunesBaseURL = UIDevice.current.userInterfaceIdiom == .tv ?
+        "com.apple.TVAppStore://itunes.apple.com/app/id" : "itms-apps://itunes.apple.com/app/id"
     
-    /// App ID
+    private static let dataURL = "http://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "-")"
     private static var appID: Int?
     
-    /// Is removed
     private static var isRemoved: Bool {
-        get { return UserDefaults.standard.bool(forKey: UserDefaultKey.isRemoved.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.isRemoved.rawValue) }
+        get { return UserDefaults.standard.bool(forKey: "SwiftyRateIsRemovedKey") }
+        set { UserDefaults.standard.set(newValue, forKey: "SwiftyRateIsRemovedKey") }
     }
     
-    /// Request counter
     private static var requestCounter: Int {
-        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.requestCounter.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.requestCounter.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: "SwiftyRateRequestCounterKey") }
+        set { UserDefaults.standard.set(newValue, forKey: "SwiftyRateRequestCounterKey") }
     }
     
-    /// Alerts shown this year
     private static var alertsShownThisYear: Int {
-        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.alertsShownThisYear.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.alertsShownThisYear.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: "SwiftyRateShownThisYearKey") }
+        set { UserDefaults.standard.set(newValue, forKey: "SwiftyRateShownThisYearKey") }
     }
     
-    /// Saved month
     private static var savedMonth: Int {
-        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.savedMonth.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.savedMonth.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: "SwiftyRateSavedMonthKey") }
+        set { UserDefaults.standard.set(newValue, forKey: "SwiftyRateSavedMonthKey") }
     }
     
-    /// Saved year
     private static var savedYear: Int {
-        get { return UserDefaults.standard.integer(forKey: UserDefaultKey.savedYear.rawValue) }
-        set { UserDefaults.standard.set(newValue, forKey: UserDefaultKey.savedYear.rawValue) }
+        get { return UserDefaults.standard.integer(forKey: "SwiftyRateSavedYearKey") }
+        set { UserDefaults.standard.set(newValue, forKey: "SwiftyRateSavedYearKey") }
     }
     
-    // MARK: - Methods
+    // MARK: - Request
     
     /// Request rate app alert
     ///
     /// - parameter viewController: The view controller that will present the UIAlertController.
     /// - parameter appLaunchesUntilFirstAlert: The requests needed until first alert is shown. Set to negative value to test. Defaults to 18.
-    public static func request(from viewController: UIViewController, afterAppLaunches appLaunchesUntilFirstAlert: Int = 18) {
+    public static func request(from viewController: UIViewController, afterAppLaunches appLaunches: Int) {
+       
+        // Make sure app launches is not set to 0 or lower
+        var appLaunchesUntilFirstAlert = appLaunches
+        
+        if appLaunchesUntilFirstAlert <= 0 {
+            appLaunchesUntilFirstAlert = 15
+        }
         
         // SKStoreReviewController
         #if os(iOS)
@@ -124,15 +105,13 @@ public enum SwiftyRate {
         }
     
         // Show alert
-        if appLaunchesUntilFirstAlert >= 0 {
-            guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else { return }
-        }
+        guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else { return }
         
         let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
         
         let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
             isRemoved = true
-            guard let url = URL(string: ITunesURL.base.rawValue + "\(appID)") else { return }
+            guard let url = URL(string: iTunesBaseURL + "\(appID)") else { return }
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:])
             } else {
@@ -154,8 +133,7 @@ public enum SwiftyRate {
 
 private extension SwiftyRate {
     
-    /// Fetch app id
-    static func fetchAppID(handler: @escaping () -> ()) {
+    static func fetchAppID(handler: @escaping () -> Void) {
         guard let url = URL(string: dataURL) else {
             print("SwiftyRate url session url error")
             return
@@ -195,9 +173,7 @@ private extension SwiftyRate {
                 }
                 
                 // Update app id
-                results.forEach {
-                    appID = $0["trackId"] as? Int
-                }
+                results.forEach { appID = $0["trackId"] as? Int }
                 
                 guard appID != nil else { return }
             
@@ -218,7 +194,6 @@ private extension SwiftyRate {
 
 private extension SwiftyRate {
     
-    /// Check if alerts needs to be showed
     static func isTimeToShowAlert(forAppLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
         
         // Get date
@@ -287,17 +262,5 @@ private extension SwiftyRate {
         
         // No alert is needed to show
         return false
-    }
-}
-
-// MARK: - Print 
-
-private extension SwiftyRate {
-    
-    /// Overrides the default print method so it print statements only show when in DEBUG mode
-    static func print(_ items: Any...) {
-        #if DEBUG
-            Swift.print(items)
-        #endif
     }
 }

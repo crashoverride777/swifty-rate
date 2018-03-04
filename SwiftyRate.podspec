@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyRate'
-s.version = '3.2.5'
+s.version = '3.2.6'
 s.license = 'MIT'
-s.summary = 'A Swift helper to show a SKStoreReviewController or a custom rate app alert.'
+s.summary = 'A Swift helper to show a SKStoreReviewController or a custom review UIAlertController.'
 
 s.homepage = 'https://github.com/crashoverride777/swifty-rate'
 s.social_media_url = 'http://twitter.com/overrideiactive'
