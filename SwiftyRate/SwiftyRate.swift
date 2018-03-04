@@ -23,8 +23,8 @@
 import UIKit
 import StoreKit
 
-/// Localized text - TODO
-private enum LocalizedText {
+/// Localized text - MARK: - TODO
+private enum LocalizedString {
     static let title = "Enjoying \(Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app")?"
     static let message = "Tap the stars to rate it on the App Store."
     static let rate = "☆☆☆☆☆"
@@ -76,7 +76,7 @@ public enum SwiftyRate {
     /// Request rate app alert
     ///
     /// - parameter viewController: The view controller that will present the UIAlertController.
-    /// - parameter appLaunchesUntilFirstAlert: The requests needed until first alert is shown. Set to negative value to test. Defaults to 18.
+    /// - parameter appLaunches: The requests needed until first alert is shown. Set to negative value to test. Defaults to 18.
     public static func request(from viewController: UIViewController, afterAppLaunches appLaunches: Int) {
        
         // Make sure app launches is not set to 0 or lower
@@ -107,9 +107,9 @@ public enum SwiftyRate {
         // Show alert
         guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else { return }
         
-        let alertController = UIAlertController(title: LocalizedText.title, message: LocalizedText.message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: LocalizedString.title, message: LocalizedString.message, preferredStyle: .alert)
         
-        let rateAction = UIAlertAction(title: LocalizedText.rate, style: .default) { _ in
+        let rateAction = UIAlertAction(title: LocalizedString.rate, style: .default) { _ in
             isRemoved = true
             guard let url = URL(string: iTunesBaseURL + "\(appID)") else { return }
             if #available(iOS 10.0, *) {
@@ -120,7 +120,7 @@ public enum SwiftyRate {
         }
         alertController.addAction(rateAction)
         
-        let cancelAction = UIAlertAction(title: LocalizedText.notNow, style: .default)
+        let cancelAction = UIAlertAction(title: LocalizedString.notNow, style: .default)
         alertController.addAction(cancelAction)
         
         DispatchQueue.main.async {
