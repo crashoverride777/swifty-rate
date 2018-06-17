@@ -11,11 +11,14 @@ A simple helper to show a SKStoreReviewController (iOS 10.3 or above) or custom 
 
 ## Installation
 
-CocoaPods is a dependency manager for Cocoa projects. Simply install the pod by adding the following line to your pod file
+[CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. Simply install the pod by adding the following line to your pod file
+
 
 ```swift
 pod 'SwiftyRate'
 ```
+
+There is now an [app](https://cocoapods.org/app) which makes handling pods much easier
 
 Altenatively you can drag the swift file(s) manually into your project.
 
