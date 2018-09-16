@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyRate'
-s.version = '3.2.6'
+s.version = '3.3.0'
 s.license = 'MIT'
 s.summary = 'A Swift helper to show a SKStoreReviewController or a custom review UIAlertController.'
 
