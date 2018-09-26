@@ -4,9 +4,11 @@
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyRate.svg?style=flat)]()
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftyRate.svg)](https://img.shields.io/cocoapods/v/SwiftyRate.svg)
 
-iOS 11 note: Apple has updated the app store guidlines and it seems that with iOS 11 it is no longer allowed to show custom review prompts. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS.
-
 A simple helper to show a SKStoreReviewController (iOS 10.3 or above) or custom UIAlertController with similar rules and behaviours. 
+
+## iOS 11 
+
+Apple has updated the app store guidlines and it seems that with iOS 11 you are no longer allowed to show custom review prompts, at least automatic ones. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS.
 
 ## Requirements
 
