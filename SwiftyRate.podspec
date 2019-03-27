@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyRate'
-s.version = '3.3.0'
+s.version = '3.4.0'
 s.license = 'MIT'
 s.summary = 'A Swift helper to show a SKStoreReviewController or a custom review UIAlertController.'
 
@@ -10,7 +10,7 @@ s.social_media_url = 'http://twitter.com/overrideiactive'
 s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }
 
 s.requires_arc = true
-s.ios.deployment_target = '9.3'
+s.ios.deployment_target = '10.3'
     
 s.source = {
     :git => 'https://github.com/crashoverride777/swifty-rate.git',
