@@ -46,7 +46,7 @@ Altenatively you can drag the SwiftyRate.swift file manually into your project.
 
 ## Usage
 
-- Add the import statment when you installed via cocoa pods. 
+- Add the import statement when using CocoaPods or SwiftPackageManager
 
 ```swift
 import SwiftyRate 
