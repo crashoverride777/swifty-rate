@@ -36,7 +36,7 @@ Than enter `https://github.com/crashoverride777/swifty-rate` as the repository U
 Alternatively if you have a Framwork that requires adding SwiftyReceiptValidator as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```swift
 dependencies: [
-.package(url: "https://github.com/crashoverride777/swifty-receipt-validator.git", from: "6.1.0")
+.package(url: "https://github.com/crashoverride777/swifty-rate.git", from: "3.5.0")
 ]
 ```
 
