@@ -13,6 +13,7 @@
 
 /* Begin PBXFileReference section */
 		6A436BA823EEF49D00D5F5EA /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		6A436BAC23EEF64000D5F5EA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B4533F8F1DA2CD6500440CC0 /* SwiftyRate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4533F921DA2CD6500440CC0 /* SwiftyRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyRate.h; sourceTree = "<group>"; };
 		B4533F931DA2CD6500440CC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +34,7 @@
 		B4533F851DA2CD6500440CC0 = {
 			isa = PBXGroup;
 			children = (
+				6A436BAC23EEF64000D5F5EA /* README.md */,
 				6A436BA823EEF49D00D5F5EA /* Package.swift */,
 				B4533F911DA2CD6500440CC0 /* SwiftyRate */,
 				B4533F901DA2CD6500440CC0 /* Products */,
