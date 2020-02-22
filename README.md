@@ -12,7 +12,7 @@ Apple has updated the app store guidlines and it seems that with iOS 11 you are 
 
 ## Requirements
 
-- iOS 10.3+
+- iOS 9.3+
 - Swift 5.0+
 
 ## Installation
