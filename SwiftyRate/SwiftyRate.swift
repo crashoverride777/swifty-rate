@@ -23,20 +23,31 @@
 import UIKit
 import StoreKit
 
-/// Localized text - MARK: - TODO
-private enum LocalizedString {
-    static let title = "Enjoying \(Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "this app")?"
-    static let message = "Tap the stars to rate it on the App Store."
-    static let rate = "☆☆☆☆☆"
-    static let notNow = "Not Now"
-}
-
 /**
  SwiftyRateAppAlert
  
  A helper for showing a SKStoreReviewController or a custom rate game UIAlertController.
  */
 public enum SwiftyRate {
+    
+    // MARK: - Types
+    
+    public struct Request {
+        let afterAppLaunches: Int
+        let customAlertTitle: String
+        let customAlertMessage: String
+        let customAlertActionCancel: String
+        
+        public init(afterAppLaunches: Int,
+                    customAlertTitle: String,
+                    customAlertMessage: String,
+                    customAlertActionCancel: String) {
+            self.afterAppLaunches = afterAppLaunches
+            self.customAlertTitle = customAlertTitle
+            self.customAlertMessage = customAlertMessage
+            self.customAlertActionCancel = customAlertActionCancel
+        }
+    }
     
     // MARK: - Properties
     
@@ -75,12 +86,12 @@ public enum SwiftyRate {
     
     /// Request rate app alert
     ///
+    /// - parameter request: The request configuration model.
     /// - parameter viewController: The view controller that will present the UIAlertController.
-    /// - parameter appLaunches: The requests needed until first alert is shown. Set to negative value to test. Defaults to 18.
-    public static func request(from viewController: UIViewController, afterAppLaunches appLaunches: Int) {
+    public static func requestReview(_ request: Request, from viewController: UIViewController) {
        
         // Make sure app launches is not set to 0 or lower
-        var appLaunchesUntilFirstAlert = appLaunches
+        var appLaunchesUntilFirstAlert = request.afterAppLaunches
         
         if appLaunchesUntilFirstAlert <= 0 {
             appLaunchesUntilFirstAlert = 15
@@ -99,17 +110,23 @@ public enum SwiftyRate {
         // Check app id
         guard let appID = appID else {
             fetchAppID {
-                request(from: viewController, afterAppLaunches: appLaunchesUntilFirstAlert)
+                requestReview(request, from: viewController)
             }
             return
         }
     
         // Show alert
-        guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else { return }
+        guard !isRemoved, isTimeToShowAlert(forAppLaunches: appLaunchesUntilFirstAlert) else {
+            return
+        }
         
-        let alertController = UIAlertController(title: LocalizedString.title, message: LocalizedString.message, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: request.customAlertTitle,
+            message: request.customAlertMessage,
+            preferredStyle: .alert
+        )
         
-        let rateAction = UIAlertAction(title: LocalizedString.rate, style: .default) { _ in
+        let rateAction = UIAlertAction(title: "☆☆☆☆☆", style: .default) { _ in
             isRemoved = true
             guard let url = URL(string: iTunesBaseURL + "\(appID)") else { return }
             if #available(iOS 10.0, *) {
@@ -120,7 +137,7 @@ public enum SwiftyRate {
         }
         alertController.addAction(rateAction)
         
-        let cancelAction = UIAlertAction(title: LocalizedString.notNow, style: .default)
+        let cancelAction = UIAlertAction(title: request.customAlertActionCancel, style: .default)
         alertController.addAction(cancelAction)
         
         DispatchQueue.main.async {

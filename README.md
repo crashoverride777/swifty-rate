@@ -60,12 +60,19 @@ As Apple describes in the documentation for SKStoreReviewController
 
 UIViewController
 ```swift
-SwiftyRate.request(from: self, afterAppLaunches: 15)
+let ratingsRequest = SwiftyRate.Request(
+    afterAppLaunches: 15,
+    customAlertTitle: "Enjoying this app"?,
+    customAlertMessage: "Tap the stars to rate it on the App Store.",
+    customAlertActionCancel: "Not Now"
+)
+SwiftyRate.requestReview(ratingsRequest, from: self)
 ```
 
 SKScene (needs to be called outside/after DidMoveToView or it will not work)
 ```swift
 if let viewController = view?.window?.rootViewController {
-     SwiftyRate.request(from: viewController, afterAppLaunches: 15)
+    let ratingsRequest = SwiftyRate.Request(...)
+    SwiftyRate.requestReview(ratingsRequest, from: viewController)
 }
 ```
