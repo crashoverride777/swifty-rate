@@ -7,7 +7,7 @@ private let packageName = "SwiftyRate"
 
 let package = Package(
     name: packageName,
-    platforms: [.iOS(.v10)],
+    platforms: [.iOS(.v9)],
     products: [.library(name: packageName, targets: [packageName])],
     targets: [.target(name: packageName, path: packageName)],
     swiftLanguageVersions: [.v5]
