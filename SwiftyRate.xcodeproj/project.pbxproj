@@ -31,11 +31,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A494E7D2402B65A00203B0C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		B4533F851DA2CD6500440CC0 = {
 			isa = PBXGroup;
 			children = (
 				6A436BAC23EEF64000D5F5EA /* README.md */,
 				6A436BA823EEF49D00D5F5EA /* Package.swift */,
+				6A494E7D2402B65A00203B0C /* Source */,
 				B4533F911DA2CD6500440CC0 /* SwiftyRate */,
 				B4533F901DA2CD6500440CC0 /* Products */,
 			);
@@ -52,7 +61,6 @@
 		B4533F911DA2CD6500440CC0 /* SwiftyRate */ = {
 			isa = PBXGroup;
 			children = (
-				B4533F9A1DA2CD7200440CC0 /* SwiftyRate.swift */,
 				B4533F921DA2CD6500440CC0 /* SwiftyRate.h */,
 				B4533F931DA2CD6500440CC0 /* Info.plist */,
 			);
@@ -273,7 +281,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 360;
+				CURRENT_PROJECT_VERSION = 361;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -283,7 +291,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 3.5.2;
+				MARKETING_VERSION = 3.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftyrate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -299,7 +307,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 360;
+				CURRENT_PROJECT_VERSION = 361;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -309,7 +317,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 3.5.2;
+				MARKETING_VERSION = 3.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftyrate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

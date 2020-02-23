@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyRate'
-s.version = '3.5.2'
+s.version = '3.5.3'
 s.license = 'MIT'
 s.summary = 'A Swift helper to show a SKStoreReviewController or a custom review UIAlertController.'
 
@@ -18,6 +18,6 @@ s.source = {
     :tag => s.version
 }
 
-s.source_files = "SwiftyRate/**/*.{swift}"
+s.source_files = 'Source/**/*.{swift}'
 
 end
