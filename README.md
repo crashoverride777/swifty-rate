@@ -6,9 +6,11 @@
 
 A simple helper to show a SKStoreReviewController (iOS 10.3 or above) or custom UIAlertController with similar rules and behaviours. 
 
-## iOS 11 
+## iOS 10.3 and higher
 
-Apple has updated the app store guidlines and it seems that with iOS 11 you are no longer allowed to show custom review prompts, at least automatic ones. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS.
+If your app is targeting iOS 10.3 and higher, there is no longer a need to use this helper as Apple has provided their own ratings prompt for iOS projects. Please read https://developer.apple.com/documentation/storekit/skstorereviewcontroller/2851536-requestreview
+
+If you are target is below iOS 10.3 this helper will display a custom alert, otherwise it will display the Apple one.
 
 ## Requirements
 
