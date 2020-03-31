@@ -44,8 +44,8 @@
 			children = (
 				6A436BAC23EEF64000D5F5EA /* README.md */,
 				6A436BA823EEF49D00D5F5EA /* Package.swift */,
-				6A494E7D2402B65A00203B0C /* Sources */,
 				B4533F911DA2CD6500440CC0 /* SwiftyRate */,
+				6A494E7D2402B65A00203B0C /* Sources */,
 				B4533F901DA2CD6500440CC0 /* Products */,
 			);
 			sourceTree = "<group>";
