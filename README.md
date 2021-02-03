@@ -2,13 +2,10 @@
 
 [![Swift 5.0](https://img.shields.io/badge/swift-5.0-ED523F.svg?style=flat)](https://swift.org/download/)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyRate.svg?style=flat)]()
+[![SPM supported](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftyRate.svg)](https://img.shields.io/cocoapods/v/SwiftyRate.svg)
 
 A simple helper to show a SKStoreReviewController (iOS 10.3 or above) or custom UIAlertController with similar rules and behaviours. 
-
-## iOS 11 
-
-Apple has updated the app store guidlines and it seems that with iOS 11 you are no longer allowed to show custom review prompts, at least automatic ones. I assume this also will apply to tvOS which sucks a bit because SKStoreReviewController is not supported on tvOS.
 
 ## Requirements
 
@@ -31,18 +28,18 @@ pod 'SwiftyRate'
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
 To add a swift package to your project simple open your project in xCode and click File > Swift Packages > Add Package Dependency.
-Than enter `https://github.com/crashoverride777/swifty-rate` as the repository URL and finish the setup wizard.
+Than enter `https://github.com/crashoverride777/swifty-rate.git` as the repository URL and finish the setup wizard.
 
 Alternatively if you have a Framwork that requires adding SwiftyRate as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```swift
 dependencies: [
-.package(url: "https://github.com/crashoverride777/swifty-rate.git", from: "3.5.0")
+    .package(url: "https://github.com/crashoverride777/swifty-rate.git", from: "3.5.0")
 ]
 ```
 
 ### Manually
 
-Altenatively you can drag the SwiftyRate.swift file manually into your project.
+Alternatively you can copy the `Sources` folder and its containing files into your project.
 
 ## Usage
 
