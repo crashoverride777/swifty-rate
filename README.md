@@ -7,14 +7,14 @@
 
 A simple helper to show a SKStoreReviewController (iOS 10.3 or above) or custom UIAlertController with similar rules and behaviours. 
 
-## Requirements
+# Requirements
 
 - iOS 9.3+
 - Swift 5.0+
 
-## Installation
+# Installation
 
-### Cocoa Pods
+## Cocoa Pods
 
 [CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. Simply install the pod by adding the following line to your pod file
 
@@ -23,7 +23,7 @@ A simple helper to show a SKStoreReviewController (iOS 10.3 or above) or custom 
 pod 'SwiftyRate'
 ```
 
-### Swift Package Manager
+## Swift Package Manager
 
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
@@ -37,11 +37,11 @@ dependencies: [
 ]
 ```
 
-### Manually
+## Manually
 
 Alternatively you can copy the `Sources` folder and its containing files into your project.
 
-## Usage
+# Usage
 
 - Add the import statement when using CocoaPods or SwiftPackageManager
 
