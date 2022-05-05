@@ -7,10 +7,15 @@
 
 A Swift library to show a SKStoreReviewController (iOS 10.3 or above) or custom UIAlertController with similar rules and behaviours. 
 
+- [Deprecated](#deprecated)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
+
+## Deprecated
+
+This library has been deprecated and will no longer be maintained in the future. Its simply time to move on from supporting iOS 10 in your apps.
 
 ## Requirements
 

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyRate'
-s.version = '3.5.5'
+s.version = '3.5.6'
 s.license = 'MIT'
 s.summary = 'A Swift helper to show a SKStoreReviewController or a custom review UIAlertController.'
 
@@ -18,5 +18,5 @@ s.source = {
 }
 
 s.source_files = 'Sources/**/*.{swift}'
-
+s.deprecated = true
 end
