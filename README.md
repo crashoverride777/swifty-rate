@@ -15,7 +15,7 @@ A Swift library to show a SKStoreReviewController (iOS 10.3 or above) or custom 
 
 ## Deprecated
 
-This library has been deprecated and will no longer be maintained in the future. Its simply time to move on from supporting iOS 10 in your apps.
+This library has been deprecated and is no longer actively maintained. Its simply time to move on from supporting iOS 10 in your apps.
 
 ## Requirements
 
