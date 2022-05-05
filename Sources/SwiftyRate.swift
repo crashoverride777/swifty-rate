@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2016-2021 Dominik Ringler
+//    Copyright (c) 2016-2022 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ import UIKit
 import StoreKit
 
 /**
- SwiftyRateAppAlert
+ SwiftyRate
  
  A helper for showing a SKStoreReviewController or a custom rate game UIAlertController.
  */
@@ -146,10 +146,9 @@ public enum SwiftyRate {
     }
 }
 
-// MARK: - Fetch App ID
+// MARK: - Private Methods
 
 private extension SwiftyRate {
-    
     static func fetchAppID(handler: @escaping () -> Void) {
         guard let url = URL(string: dataURL) else {
             print("SwiftyRate url session url error")
@@ -205,14 +204,8 @@ private extension SwiftyRate {
             }
         }.resume()
     }
-}
 
-// MARK: - Check If Time To Show Alert
-
-private extension SwiftyRate {
-    
     static func isTimeToShowAlert(forAppLaunches appLaunchesUntilFirstAlert: Int) -> Bool {
-        
         // Get date
         let date = Date()
         let formatter = DateFormatter()
