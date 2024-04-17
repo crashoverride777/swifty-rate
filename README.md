@@ -1,4 +1,4 @@
-[![Swift 5.0](https://img.shields.io/badge/swift-5.0-ED523F.svg?style=flat)](https://swift.org/download/)
+[![Swift 5.6](https://img.shields.io/badge/swift-5.6-ED523F.svg?style=flat)](https://swift.org/download/)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyRate.svg?style=flat)]()
 [![SPM supported](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftyRate.svg)](https://img.shields.io/cocoapods/v/SwiftyRate.svg)
@@ -7,20 +7,20 @@
 
 A Swift library to show a SKStoreReviewController (iOS 10.3 or above) or custom UIAlertController with similar rules and behaviours. 
 
-- [Deprecated](#deprecated)
+- [Deprecation](#deprecation)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 
-## Deprecated
+## Deprecation
 
-This library has been deprecated and is no longer actively maintained. Its simply time to move on from supporting iOS 10 in your apps.
+This library is deprecated and no longer supported.
 
 ## Requirements
 
 - iOS 9.3+
-- Swift 5.0+
+- Swift 5.6+
 
 ## Installation
 
